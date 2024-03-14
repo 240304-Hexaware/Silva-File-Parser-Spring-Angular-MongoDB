@@ -10,11 +10,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-public class FileParserController {
+public class UserController {
     private UserService userService;
 
     @Autowired
-    public FileParserController(UserService userService){
+    public UserController(UserService userService){
         this.userService = userService;
     }
 
