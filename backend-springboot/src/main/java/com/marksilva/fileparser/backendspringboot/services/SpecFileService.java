@@ -1,5 +1,6 @@
 package com.marksilva.fileparser.backendspringboot.services;
 
+import com.marksilva.fileparser.backendspringboot.exceptions.InvalidSpecFileException;
 import com.marksilva.fileparser.backendspringboot.exceptions.SpecFileNotFoundException;
 import com.marksilva.fileparser.backendspringboot.models.SpecFile;
 import com.marksilva.fileparser.backendspringboot.repositories.SpecFileRepository;
@@ -19,4 +20,15 @@ public class SpecFileService {
         return specFileRepository.findByName(name).orElseThrow(() ->
                 new SpecFileNotFoundException("Spec File with name - " + name + " - could not be found" ));
     }
+
+    public SpecFile insertNewSpecFile(SpecFile newSpecFile) throws InvalidSpecFileException {
+        if(newSpecFile.getName() == null) {
+            throw new InvalidSpecFileException("The specFile must have a 'name' field that is not null");
+        }
+        if(newSpecFile.getListOfFields() == null) {
+            throw new InvalidSpecFileException("The specFile must have a 'listOfFields' field that is not null");
+        }
+        return specFileRepository.save(newSpecFile);
+    }
+
 }

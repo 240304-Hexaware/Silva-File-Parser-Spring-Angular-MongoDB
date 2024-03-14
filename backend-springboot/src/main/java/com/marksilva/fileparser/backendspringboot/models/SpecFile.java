@@ -1,10 +1,15 @@
 package com.marksilva.fileparser.backendspringboot.models;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.Objects;
 
 @Document("specFiles")
@@ -15,6 +20,17 @@ public class SpecFile {
     private org.bson.Document[] listOfFields;
 
     public SpecFile() {
+    }
+
+    public SpecFile(ObjectId id, String name, org.bson.Document[] listOfFields) {
+        this.id = id;
+        this.name = name;
+        this.listOfFields = listOfFields;
+    }
+
+    public Map<String, Field> parseSpec(File specFile) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(specFile, new TypeReference<Map<String, Field>>() {});
     }
 
     public ObjectId getId() {

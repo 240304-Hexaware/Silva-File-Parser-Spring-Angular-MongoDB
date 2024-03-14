@@ -35,7 +35,7 @@ public class UserController {
         return userService.findByUsername(username);
     }
 
-    @PostMapping("users/register")
+    @PostMapping("users")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public User registerNewUser(@RequestBody User newUser) throws DuplicateUsernameException {
         return this.userService.registerNewUser(newUser);
