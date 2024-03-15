@@ -4,6 +4,7 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
 import java.util.Objects;
 
 @Document("users")
@@ -12,6 +13,8 @@ public class User {
     private ObjectId id;
     private String username;
     private String password;
+    private List<ObjectId> listOfSpecFileIds;
+    private List<ObjectId> listOfParsedFileIds;
 
     public User() {
     }
@@ -49,6 +52,22 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<ObjectId> getListOfSpecFileIds() {
+        return listOfSpecFileIds;
+    }
+
+    public void setListOfSpecFileIds(List<ObjectId> listOfSpecFileIds) {
+        this.listOfSpecFileIds = listOfSpecFileIds;
+    }
+
+    public List<ObjectId> getListOfParsedFileIds() {
+        return listOfParsedFileIds;
+    }
+
+    public void setListOfParsedFileIds(List<ObjectId> listOfParsedFileIds) {
+        this.listOfParsedFileIds = listOfParsedFileIds;
     }
 
     @Override
