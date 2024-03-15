@@ -25,10 +25,9 @@ public class SpecFileService {
         if(newSpecFile.getName() == null) {
             throw new InvalidSpecFileException("The specFile must have a 'name' field that is not null");
         }
-        if(newSpecFile.getListOfFields() == null) {
+        if(newSpecFile.getDocOfFields() == null) {
             throw new InvalidSpecFileException("The specFile must have a 'listOfFields' field that is not null");
         }
         return specFileRepository.save(newSpecFile);
     }
-
 }

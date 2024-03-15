@@ -1,15 +1,10 @@
 package com.marksilva.fileparser.backendspringboot.models;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
-import java.util.Map;
 import java.util.Objects;
 
 @Document("specFiles")
@@ -17,20 +12,15 @@ public class SpecFile {
     @Id
     private ObjectId id;
     private String name;
-    private org.bson.Document[] listOfFields;
+    private org.bson.Document docOfFields;
 
     public SpecFile() {
     }
 
-    public SpecFile(ObjectId id, String name, org.bson.Document[] listOfFields) {
+    public SpecFile(ObjectId id, String name, org.bson.Document docOfFields) {
         this.id = id;
         this.name = name;
-        this.listOfFields = listOfFields;
-    }
-
-    public Map<String, Field> parseSpec(File specFile) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(specFile, new TypeReference<Map<String, Field>>() {});
+        this.docOfFields = docOfFields;
     }
 
     public ObjectId getId() {
@@ -49,26 +39,24 @@ public class SpecFile {
         this.name = name;
     }
 
-    public org.bson.Document[] getListOfFields() {
-        return listOfFields;
+    public org.bson.Document getDocOfFields() {
+        return docOfFields;
     }
 
-    public void setListOfFields(org.bson.Document[] listOfFields) {
-        this.listOfFields = listOfFields;
+    public void setDocOfFields(org.bson.Document docOfFields) {
+        this.docOfFields = docOfFields;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof SpecFile specFile)) return false;
-        return Objects.equals(getId(), specFile.getId()) && Objects.equals(getName(), specFile.getName()) && Arrays.equals(getListOfFields(), specFile.getListOfFields());
+        return Objects.equals(getId(), specFile.getId()) && Objects.equals(getName(), specFile.getName()) && Objects.equals(getDocOfFields(), specFile.getDocOfFields());
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(getId(), getName());
-        result = 31 * result + Arrays.hashCode(getListOfFields());
-        return result;
+        return Objects.hash(getId(), getName(), getDocOfFields());
     }
 
     @Override
@@ -76,7 +64,7 @@ public class SpecFile {
         return "SpecFile{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", listOfFields=" + Arrays.toString(listOfFields) +
+                ", docOfFields=" + docOfFields +
                 '}';
     }
 }
