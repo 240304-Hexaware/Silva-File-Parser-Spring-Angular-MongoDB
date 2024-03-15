@@ -18,35 +18,67 @@ public class UserController {
         this.userService = userService;
     }
 
+    /**
+     * Test Connection to the Spring Server from API call
+     * @return Pong within the response body
+     */
     @GetMapping("/ping")
     public String ping() {
         return "pong!";
     }
 
+    /**
+     * Get the user with the given ID
+     * @param id The id of the user being searched for within the database
+     * @return The User with the given id
+     * @throws UserNotFoundException - User with the given Id could not be found
+     */
     @GetMapping("/users/id/{id}")
     @ResponseStatus(HttpStatus.OK)
     public User getById(@PathVariable String id) throws UserNotFoundException {
         return userService.findById(new ObjectId(id));
     }
 
+    /**
+     * Get the user with the given user name
+     * @param username the username of the user being searched for
+     * @return The user with the given username
+     * @throws UserNotFoundException - User with the given username could not be found
+     */
     @GetMapping("/users/username/{username}")
     @ResponseStatus(HttpStatus.OK)
     public User getByUsername(@PathVariable String username) throws UserNotFoundException {
         return userService.findByUsername(username);
     }
 
+    /**
+     * Post a new user into the database
+     * @param newUser the information of the new user in json format
+     * @return the newuser with their ObjectID
+     * @throws DuplicateUsernameException - The user with the given username is already exists
+     */
     @PostMapping("users")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public User registerNewUser(@RequestBody User newUser) throws DuplicateUsernameException {
         return this.userService.registerNewUser(newUser);
     }
 
+    /**
+     * Handle Error when User could not be found
+     * @param e the UserNotFound Exception thrown
+     * @return the message of the exception
+     */
     @ExceptionHandler(UserNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String userNotFound(UserNotFoundException e) {
         return e.getMessage();
     }
 
+    /**
+     * Handle Error when User tries to create an account with an already existing username
+     * @param e The DuplicateUsername Exception thrown
+     * @return the message of the exception
+     */
     @ExceptionHandler(DuplicateUsernameException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String duplicateUserFound(DuplicateUsernameException e) {
