@@ -13,6 +13,7 @@ public class SpecFile {
     private ObjectId id;
     private String name;
     private org.bson.Document docOfFields;
+    private ObjectId createdByUserId;
 
     public SpecFile() {
     }
@@ -45,6 +46,14 @@ public class SpecFile {
 
     public void setDocOfFields(org.bson.Document docOfFields) {
         this.docOfFields = docOfFields;
+    }
+
+    public ObjectId getCreatedByUserId() {
+        return createdByUserId;
+    }
+
+    public void setCreatedByUserId(ObjectId createdByUserId) {
+        this.createdByUserId = createdByUserId;
     }
 
     @Override
