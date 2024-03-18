@@ -23,7 +23,7 @@ public class ParsedFileService {
         this.parsedFileRepository = parsedFileRepository;
     }
 
-    //TODO: ADD METADATA ID
+    //TODO: ADD METADATA ID AND STORE FLAT FILE TO BLOCK STORAGE
     public ParsedFile insertFile(MultipartFile flatFile, SpecFile specFile, String userID) throws IOException {
         ParsedFile newParsedFile = new ParsedFile();
         Document docParsedFileInfo = new Document();
