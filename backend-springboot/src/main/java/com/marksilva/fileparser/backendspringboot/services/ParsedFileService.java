@@ -24,10 +24,9 @@ public class ParsedFileService {
     //TODO: ADD USER ID AND METADATA ID
     public ParsedFile insertFile(MultipartFile flatFile, SpecFile specFile) throws IOException {
         ParsedFile newParsedFile = new ParsedFile();
+        Document docParsedFileInfo = new Document();
 
-        Document docOfKeyAndValue = new Document();
-
-        String fileContent = this.parseFileToString(flatFile);
+        String fileContent = HelperForService.parseFileToString(flatFile);
         Document specFileDoc = specFile.getDocOfFields();
         for(String fieldName : specFileDoc.keySet()){
             //TODO: Add Class Types
@@ -35,19 +34,11 @@ public class ParsedFileService {
             String fieldValue = fileContent.substring(
                     fieldDoc.getInteger("start_pos"), fieldDoc.getInteger("end_pos") + 1)
                     .trim();
-            docOfKeyAndValue.put(fieldName, fieldValue);
+            docParsedFileInfo.put(fieldName, fieldValue);
         }
 
-        newParsedFile.setFileInfo(docOfKeyAndValue);
+        newParsedFile.setFileInfo(docParsedFileInfo);
         return this.parsedFileRepository.save(newParsedFile);
     }
 
-    public String parseFileToString(MultipartFile flatFile) throws IOException {
-        InputStreamReader reader = new InputStreamReader(flatFile.getInputStream());
-        StringBuilder builder = new StringBuilder();
-        while(reader.ready()) {
-            builder.append((char) reader.read());
-        }
-        return builder.toString();
-    }
 }
