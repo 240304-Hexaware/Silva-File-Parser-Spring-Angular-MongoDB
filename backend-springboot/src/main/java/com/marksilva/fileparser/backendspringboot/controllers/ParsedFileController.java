@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 @RestController
+@RequestMapping("/users/{userID}/file")
 public class ParsedFileController {
     private ParsedFileService parsedFileService;
     private SpecFileService specFileService;
@@ -23,11 +24,11 @@ public class ParsedFileController {
         this.specFileService = specFileService;
     }
 
-    @PostMapping("/file/specFile")
+    @PostMapping("specFile/{name}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public ParsedFile postNewParsedFileWithSpecFileName(@RequestParam MultipartFile flatFile, @RequestParam String specFileName) throws SpecFileNotFoundException, IOException {
-        SpecFile specFile = this.specFileService.findByName(specFileName);
-        return this.parsedFileService.insertFile(flatFile, specFile);
+    public ParsedFile postNewParsedFileWithSpecFileName(@RequestParam MultipartFile flatFile, @PathVariable String name, @PathVariable String userID) throws SpecFileNotFoundException, IOException {
+        SpecFile specFile = this.specFileService.findByName(name);
+        return this.parsedFileService.insertFile(flatFile, specFile, userID);
     }
 
     @ExceptionHandler(SpecFileNotFoundException.class)

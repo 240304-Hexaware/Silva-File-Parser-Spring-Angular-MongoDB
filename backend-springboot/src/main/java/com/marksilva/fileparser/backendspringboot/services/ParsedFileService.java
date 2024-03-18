@@ -4,6 +4,7 @@ import com.marksilva.fileparser.backendspringboot.models.ParsedFile;
 import com.marksilva.fileparser.backendspringboot.models.SpecFile;
 import com.marksilva.fileparser.backendspringboot.repositories.ParsedFileRepository;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,7 +23,7 @@ public class ParsedFileService {
     }
 
     //TODO: ADD USER ID AND METADATA ID
-    public ParsedFile insertFile(MultipartFile flatFile, SpecFile specFile) throws IOException {
+    public ParsedFile insertFile(MultipartFile flatFile, SpecFile specFile, String userID) throws IOException {
         ParsedFile newParsedFile = new ParsedFile();
         Document docParsedFileInfo = new Document();
 
@@ -38,6 +39,7 @@ public class ParsedFileService {
         }
 
         newParsedFile.setFileInfo(docParsedFileInfo);
+        newParsedFile.setUserId(new ObjectId(userID));
         return this.parsedFileRepository.save(newParsedFile);
     }
 
