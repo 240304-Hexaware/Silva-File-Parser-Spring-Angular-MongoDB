@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 
 @Service
 public class ParsedFileService {
@@ -22,7 +23,7 @@ public class ParsedFileService {
         this.parsedFileRepository = parsedFileRepository;
     }
 
-    //TODO: ADD USER ID AND METADATA ID
+    //TODO: ADD METADATA ID
     public ParsedFile insertFile(MultipartFile flatFile, SpecFile specFile, String userID) throws IOException {
         ParsedFile newParsedFile = new ParsedFile();
         Document docParsedFileInfo = new Document();
@@ -43,4 +44,7 @@ public class ParsedFileService {
         return this.parsedFileRepository.save(newParsedFile);
     }
 
+    public List<ParsedFile> findParsedFilesByUserId(String userID){
+        return this.parsedFileRepository.findByUserId(new ObjectId((userID)));
+    }
 }
