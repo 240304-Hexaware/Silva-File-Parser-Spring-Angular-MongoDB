@@ -52,18 +52,6 @@ public class UserController {
     }
 
     /**
-     * Post a new user into the database
-     * @param newUser the information of the new user in json format
-     * @return the newuser with their ObjectID
-     * @throws DuplicateUsernameException - The user with the given username is already exists
-     */
-    @PostMapping("users")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public User registerNewUser(@RequestBody User newUser) throws DuplicateUsernameException {
-        return this.userService.registerNewUser(newUser);
-    }
-
-    /**
      * Handle Error when User could not be found
      * @param e the UserNotFound Exception thrown
      * @return the message of the exception
