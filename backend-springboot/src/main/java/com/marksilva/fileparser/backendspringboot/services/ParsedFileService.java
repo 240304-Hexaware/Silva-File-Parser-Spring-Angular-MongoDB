@@ -1,7 +1,9 @@
 package com.marksilva.fileparser.backendspringboot.services;
 
+import com.marksilva.fileparser.backendspringboot.exceptions.InvalidInputException;
 import com.marksilva.fileparser.backendspringboot.models.ParsedFile;
 import com.marksilva.fileparser.backendspringboot.models.SpecFile;
+import com.marksilva.fileparser.backendspringboot.models.User;
 import com.marksilva.fileparser.backendspringboot.repositories.ParsedFileRepository;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -23,7 +25,12 @@ public class ParsedFileService {
     }
 
     //TODO: ADD METADATA ID AND STORE FLAT FILE TO BLOCK STORAGE
-    public ParsedFile insertFile(MultipartFile flatFile, SpecFile specFile, ObjectId userID) throws IOException {
+    public ParsedFile insertFile(MultipartFile flatFile, SpecFile specFile, User user) throws IOException, InvalidInputException {
+        //TODO: Create New EXCEPTION if wanted
+        //User Cannot use specfile that it did not create
+        if(!user.getListOfSpecFileIds().contains(specFile.getId())){
+            throw new InvalidInputException(String.format("Cannot find specFile: %s in the user: %s", specFile.getName(), user.getUsername()));
+        }
         ParsedFile newParsedFile = new ParsedFile();
         Document docParsedFileInfo = new Document();
 
@@ -39,7 +46,7 @@ public class ParsedFileService {
         }
 
         newParsedFile.setFileInfo(docParsedFileInfo);
-        newParsedFile.setUserId(userID);
+        newParsedFile.setUserId(user.getId());
         return this.parsedFileRepository.save(newParsedFile);
     }
 

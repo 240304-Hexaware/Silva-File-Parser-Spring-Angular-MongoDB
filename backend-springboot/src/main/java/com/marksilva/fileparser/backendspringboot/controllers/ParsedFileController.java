@@ -1,5 +1,6 @@
 package com.marksilva.fileparser.backendspringboot.controllers;
 
+import com.marksilva.fileparser.backendspringboot.exceptions.InvalidInputException;
 import com.marksilva.fileparser.backendspringboot.exceptions.SpecFileNotFoundException;
 import com.marksilva.fileparser.backendspringboot.exceptions.UserNotFoundException;
 import com.marksilva.fileparser.backendspringboot.models.ParsedFile;
@@ -38,9 +39,9 @@ public class ParsedFileController {
 
     @PostMapping("specFile/{specFileName}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public ParsedFile postNewParsedFileWithSpecFileName(@RequestParam MultipartFile flatFile, @PathVariable String specFileName, @PathVariable String username) throws SpecFileNotFoundException, IOException, UserNotFoundException {
+    public ParsedFile postNewParsedFileWithSpecFileName(@RequestParam MultipartFile flatFile, @PathVariable String specFileName, @PathVariable String username) throws SpecFileNotFoundException, IOException, UserNotFoundException, InvalidInputException {
         User currUser = this.userService.findByUsername(username);
         SpecFile specFile = this.specFileService.findByName(specFileName);
-        return this.parsedFileService.insertFile(flatFile, specFile, currUser.getId());
+        return this.parsedFileService.insertFile(flatFile, specFile, currUser);
     }
 }
