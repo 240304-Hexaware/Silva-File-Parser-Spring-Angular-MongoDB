@@ -1,5 +1,6 @@
 package com.marksilva.fileparser.backendspringboot.services;
 
+import com.marksilva.fileparser.backendspringboot.exceptions.DuplicateUsernameException;
 import com.marksilva.fileparser.backendspringboot.models.Role;
 import com.marksilva.fileparser.backendspringboot.models.User;
 import com.marksilva.fileparser.backendspringboot.repositories.RoleRepository;
@@ -26,8 +27,12 @@ public class AuthenticationService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User registerUser(User newUser){
+    public User registerUser(User newUser) throws DuplicateUsernameException {
+        if(userRepository.existsUserByUsername(newUser.getUsername())) {
+            throw new DuplicateUsernameException("User with username - " + newUser.getUsername() + " - already exists");
+        }
         String encodedPassword = passwordEncoder.encode(newUser.getPassword());
+        //TODO: Create Expception Case for ROLE not found
         Role userRole = roleRepository.findByAuthority("USER").get();
 
         Set<Role> authorities = new HashSet<>();

@@ -61,15 +61,4 @@ public class UserController {
     public String userNotFound(UserNotFoundException e) {
         return e.getMessage();
     }
-
-    /**
-     * Handle Error when User tries to create an account with an already existing username
-     * @param e The DuplicateUsername Exception thrown
-     * @return the message of the exception
-     */
-    @ExceptionHandler(DuplicateUsernameException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String duplicateUserFound(DuplicateUsernameException e) {
-        return e.getMessage();
-    }
 }

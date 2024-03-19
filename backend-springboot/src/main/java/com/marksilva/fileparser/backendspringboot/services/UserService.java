@@ -25,13 +25,6 @@ public class UserService implements UserDetailsService {
         this.encoder = encoder;
     }
 
-    public User registerNewUser(User newUser) throws DuplicateUsernameException {
-        if(userRepository.existsUserByUsername(newUser.getUsername())) {
-            throw new DuplicateUsernameException("User with username - " + newUser.getUsername() + " - already exists");
-        }
-        return userRepository.save(newUser);
-    }
-
     public User findById(ObjectId id) throws UserNotFoundException {
         return userRepository.findById(id).orElseThrow(() ->
                 new UserNotFoundException("User with id - " + id + " - could not be found "));
