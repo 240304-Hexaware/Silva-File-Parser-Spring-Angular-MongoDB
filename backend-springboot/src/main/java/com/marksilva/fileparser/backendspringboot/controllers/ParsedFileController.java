@@ -43,16 +43,4 @@ public class ParsedFileController {
         SpecFile specFile = this.specFileService.findByName(specFileName);
         return this.parsedFileService.insertFile(flatFile, specFile, currUser.getId());
     }
-
-    @ExceptionHandler(SpecFileNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String specFileNotFound(SpecFileNotFoundException e){
-        return e.getMessage();
-    }
-
-    @ExceptionHandler(IOException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public String IOException(IOException e){
-        return e.getMessage();
-    }
 }

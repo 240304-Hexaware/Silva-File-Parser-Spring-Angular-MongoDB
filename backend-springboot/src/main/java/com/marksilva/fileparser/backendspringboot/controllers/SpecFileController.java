@@ -56,16 +56,4 @@ public class SpecFileController {
         this.userService.addSpecFileIdWithUsername(newSpecFile.getId(), userPoster);
         return newSpecFile;
     }
-
-    @ExceptionHandler(SpecFileNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String specFileNotFound(SpecFileNotFoundException e){
-        return e.getMessage();
-    }
-
-    @ExceptionHandler(InvalidSpecFileException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String invalidSpecFile(InvalidSpecFileException e) {
-        return e.getMessage();
-    }
 }

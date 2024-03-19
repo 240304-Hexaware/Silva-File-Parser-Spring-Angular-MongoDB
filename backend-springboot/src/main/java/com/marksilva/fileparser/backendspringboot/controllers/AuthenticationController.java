@@ -22,15 +22,4 @@ public class AuthenticationController {
     public User registerUser(@RequestBody User newUser) throws DuplicateUsernameException {
         return this.authenticationService.registerUser(newUser);
     }
-
-    /**
-     * Handle Error when User tries to create an account with an already existing username
-     * @param e The DuplicateUsername Exception thrown
-     * @return the message of the exception
-     */
-    @ExceptionHandler(DuplicateUsernameException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String duplicateUserFound(DuplicateUsernameException e) {
-        return e.getMessage();
-    }
 }

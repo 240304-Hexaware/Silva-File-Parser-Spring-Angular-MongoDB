@@ -50,15 +50,4 @@ public class UserController {
     public User getByUsername(@PathVariable String username) throws UserNotFoundException {
         return userService.findByUsername(username);
     }
-
-    /**
-     * Handle Error when User could not be found
-     * @param e the UserNotFound Exception thrown
-     * @return the message of the exception
-     */
-    @ExceptionHandler(UserNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String userNotFound(UserNotFoundException e) {
-        return e.getMessage();
-    }
 }
