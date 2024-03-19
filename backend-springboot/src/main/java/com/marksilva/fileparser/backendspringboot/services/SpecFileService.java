@@ -43,13 +43,14 @@ public class SpecFileService {
      * @throws IOException
      */
     public SpecFile insertNewSpecFile(MultipartFile specFileAsJson, String userID) throws InvalidSpecFileException, IOException {
+        //TODO: Implement MultiLine parsing
         ObjectMapper objectMapper = new ObjectMapper();
         String specFileContent = HelperForService.parseFileToString(specFileAsJson);
 
         SpecFile newSpecFile = objectMapper.readValue(specFileContent, SpecFile.class);
         newSpecFile.setCreatedByUserId(new ObjectId(userID));
 
-        //TODO: Validate that the specFile was added by a user
+        //TODO: Validate that the specFile was added by a valid User
         if(newSpecFile.getName() == null) {
             throw new InvalidSpecFileException("The specFile must have a 'name' field that is not null");
         }

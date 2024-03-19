@@ -12,6 +12,7 @@ import java.util.*;
 public class User implements UserDetails {
     @Id
     private ObjectId id;
+    //TODO: Make UserName Unique
     private String username;
     private String password;
     private List<ObjectId> listOfSpecFileIds;
@@ -21,7 +22,17 @@ public class User implements UserDetails {
 
     public User() {
         super();
+        this.listOfParsedFileIds = new ArrayList<>();
+        this.listOfSpecFileIds = new ArrayList<>();
         this.authorities = new HashSet<>();
+    }
+
+    public User(String username, String password, Set<Role> authorities) {
+        this.username = username;
+        this.password = password;
+        this.listOfParsedFileIds = new ArrayList<>();
+        this.listOfSpecFileIds = new ArrayList<>();
+        this.authorities = authorities;
     }
 
     public User(ObjectId id, String username, String password, List<ObjectId> listOfSpecFileIds, List<ObjectId> listOfParsedFileIds, Set<Role> authorities) {
