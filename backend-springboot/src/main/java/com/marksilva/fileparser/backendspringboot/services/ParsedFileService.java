@@ -23,7 +23,7 @@ public class ParsedFileService {
     }
 
     //TODO: ADD METADATA ID AND STORE FLAT FILE TO BLOCK STORAGE
-    public ParsedFile insertFile(MultipartFile flatFile, SpecFile specFile, String userID) throws IOException {
+    public ParsedFile insertFile(MultipartFile flatFile, SpecFile specFile, ObjectId userID) throws IOException {
         ParsedFile newParsedFile = new ParsedFile();
         Document docParsedFileInfo = new Document();
 
@@ -39,11 +39,11 @@ public class ParsedFileService {
         }
 
         newParsedFile.setFileInfo(docParsedFileInfo);
-        newParsedFile.setUserId(new ObjectId(userID));
+        newParsedFile.setUserId(userID);
         return this.parsedFileRepository.save(newParsedFile);
     }
 
-    public List<ParsedFile> findParsedFilesByUserId(String userID){
-        return this.parsedFileRepository.findByUserId(new ObjectId((userID)));
+    public List<ParsedFile> findParsedFilesByUserId(ObjectId userID){
+        return this.parsedFileRepository.findByUserId(userID);
     }
 }
