@@ -4,7 +4,6 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Arrays;
 import java.util.Objects;
 
 @Document("specFiles")
@@ -13,7 +12,7 @@ public class SpecFile {
     private ObjectId id;
     private String name;
     private org.bson.Document docOfFields;
-    private ObjectId createdByUserId;
+    private ObjectId createdUserId;
 
     public SpecFile() {
     }
@@ -48,12 +47,12 @@ public class SpecFile {
         this.docOfFields = docOfFields;
     }
 
-    public ObjectId getCreatedByUserId() {
-        return createdByUserId;
+    public ObjectId getCreatedUserId() {
+        return createdUserId;
     }
 
-    public void setCreatedByUserId(ObjectId createdByUserId) {
-        this.createdByUserId = createdByUserId;
+    public void setCreatedUserId(ObjectId createdUserId) {
+        this.createdUserId = createdUserId;
     }
 
     @Override

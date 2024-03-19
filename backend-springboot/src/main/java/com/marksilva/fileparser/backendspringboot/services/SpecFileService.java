@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.marksilva.fileparser.backendspringboot.exceptions.InvalidSpecFileException;
 import com.marksilva.fileparser.backendspringboot.exceptions.SpecFileNotFoundException;
 import com.marksilva.fileparser.backendspringboot.models.SpecFile;
+import com.marksilva.fileparser.backendspringboot.models.User;
 import com.marksilva.fileparser.backendspringboot.repositories.SpecFileRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @Service
 public class SpecFileService {
@@ -32,6 +34,10 @@ public class SpecFileService {
                 new SpecFileNotFoundException("Spec File with name - " + name + " - could not be found" ));
     }
 
+    public List<SpecFile> findListOfSpecFile(User user) {
+        return this.specFileRepository.findByCreatedUserId(user.getId());
+    }
+
     /**
      * Insert a new specfile given a MultipartFile representation of a json file and a String represention of the
      * ObjectID of the user who uploaded the specFile.
@@ -47,7 +53,7 @@ public class SpecFileService {
         String specFileContent = HelperForService.parseFileToString(specFileAsJson);
 
         SpecFile newSpecFile = objectMapper.readValue(specFileContent, SpecFile.class);
-        newSpecFile.setCreatedByUserId(userID);
+        newSpecFile.setCreatedUserId(userID);
 
         //TODO: Validate that the specFile was added by a valid User
         //TODO: Validate that the same file is not uploaded twice (Optional)

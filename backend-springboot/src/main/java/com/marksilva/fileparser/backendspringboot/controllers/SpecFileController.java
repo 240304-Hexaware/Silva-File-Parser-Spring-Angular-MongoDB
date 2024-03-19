@@ -7,12 +7,14 @@ import com.marksilva.fileparser.backendspringboot.models.SpecFile;
 import com.marksilva.fileparser.backendspringboot.models.User;
 import com.marksilva.fileparser.backendspringboot.services.SpecFileService;
 import com.marksilva.fileparser.backendspringboot.services.UserService;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/users/{username}/specFile")
@@ -27,15 +29,22 @@ public class SpecFileController {
     }
 
     /**
-     * Get a SpecFile using the given name
-     * @param name the name of the SpecFile being searched for
-     * @return the Specfile of the given name
-     * @throws SpecFileNotFoundException when the SpecFile with the given name could not be found
+     * Get a SpecFile using the given specFileName
+     * @param specFileName the specFileName of the SpecFile being searched for
+     * @return the Specfile of the given specFileName
+     * @throws SpecFileNotFoundException when the SpecFile with the given specFileName could not be found
      */
-    @GetMapping("{name}")
+    @GetMapping("{specFileName}")
     @ResponseStatus(HttpStatus.OK)
-    public SpecFile getByName(@PathVariable String name) throws SpecFileNotFoundException {
-        return specFileService.findByName(name);
+    public SpecFile getByName(@PathVariable String specFileName) throws SpecFileNotFoundException {
+        return specFileService.findByName(specFileName);
+    }
+
+    @GetMapping("")
+    @ResponseStatus(HttpStatus.OK)
+    public List<SpecFile> getByUsername(@PathVariable String username) throws UserNotFoundException {
+        User currUser = this.userService.findByUsername(username);
+        return this.specFileService.findListOfSpecFile(currUser);
     }
 
     /**
