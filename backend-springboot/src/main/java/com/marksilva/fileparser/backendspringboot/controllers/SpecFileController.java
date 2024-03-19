@@ -4,8 +4,6 @@ import com.marksilva.fileparser.backendspringboot.exceptions.InvalidSpecFileExce
 import com.marksilva.fileparser.backendspringboot.exceptions.SpecFileNotFoundException;
 import com.marksilva.fileparser.backendspringboot.models.SpecFile;
 import com.marksilva.fileparser.backendspringboot.services.SpecFileService;
-import jakarta.servlet.http.HttpServletRequest;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
