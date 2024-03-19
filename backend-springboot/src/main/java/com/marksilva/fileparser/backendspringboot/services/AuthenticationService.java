@@ -1,6 +1,7 @@
 package com.marksilva.fileparser.backendspringboot.services;
 
 import com.marksilva.fileparser.backendspringboot.exceptions.DuplicateUsernameException;
+import com.marksilva.fileparser.backendspringboot.exceptions.InvalidInputException;
 import com.marksilva.fileparser.backendspringboot.models.Role;
 import com.marksilva.fileparser.backendspringboot.models.User;
 import com.marksilva.fileparser.backendspringboot.repositories.RoleRepository;
@@ -27,7 +28,13 @@ public class AuthenticationService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User registerUser(User newUser) throws DuplicateUsernameException {
+    public User registerUser(User newUser) throws DuplicateUsernameException, InvalidInputException {
+        if(newUser.getUsername() == null || newUser.getUsername().isEmpty()) {
+            throw new InvalidInputException("Username cannot be blank or null");
+        }
+        if(newUser.getPassword() == null || newUser.getPassword().isEmpty()) {
+            throw new InvalidInputException("Password cannot be blank or null");
+        }
         if(userRepository.existsUserByUsername(newUser.getUsername())) {
             throw new DuplicateUsernameException("User with username - " + newUser.getUsername() + " - already exists");
         }

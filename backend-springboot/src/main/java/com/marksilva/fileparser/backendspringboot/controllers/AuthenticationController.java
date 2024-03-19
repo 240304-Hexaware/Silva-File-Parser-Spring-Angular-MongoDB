@@ -1,6 +1,7 @@
 package com.marksilva.fileparser.backendspringboot.controllers;
 
 import com.marksilva.fileparser.backendspringboot.exceptions.DuplicateUsernameException;
+import com.marksilva.fileparser.backendspringboot.exceptions.InvalidInputException;
 import com.marksilva.fileparser.backendspringboot.models.User;
 import com.marksilva.fileparser.backendspringboot.services.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public User registerUser(@RequestBody User newUser) throws DuplicateUsernameException {
+    public User registerUser(@RequestBody User newUser) throws DuplicateUsernameException, InvalidInputException {
         return this.authenticationService.registerUser(newUser);
     }
 }

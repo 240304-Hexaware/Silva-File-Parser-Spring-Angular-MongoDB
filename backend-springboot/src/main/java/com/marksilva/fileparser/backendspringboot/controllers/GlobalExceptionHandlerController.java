@@ -1,9 +1,6 @@
 package com.marksilva.fileparser.backendspringboot.controllers;
 
-import com.marksilva.fileparser.backendspringboot.exceptions.DuplicateUsernameException;
-import com.marksilva.fileparser.backendspringboot.exceptions.InvalidSpecFileException;
-import com.marksilva.fileparser.backendspringboot.exceptions.SpecFileNotFoundException;
-import com.marksilva.fileparser.backendspringboot.exceptions.UserNotFoundException;
+import com.marksilva.fileparser.backendspringboot.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -28,6 +25,14 @@ public class GlobalExceptionHandlerController {
     @ExceptionHandler(InvalidSpecFileException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Object> invalidSpecFile(InvalidSpecFileException e) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(e.getMessage());
+    }
+
+    @ExceptionHandler(InvalidInputException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Object> invalidInput(InvalidInputException e) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(e.getMessage());
