@@ -2,8 +2,10 @@ package com.marksilva.fileparser.backendspringboot.controllers;
 
 import com.marksilva.fileparser.backendspringboot.exceptions.InvalidSpecFileException;
 import com.marksilva.fileparser.backendspringboot.exceptions.SpecFileNotFoundException;
+import com.marksilva.fileparser.backendspringboot.exceptions.UserNotFoundException;
 import com.marksilva.fileparser.backendspringboot.models.SpecFile;
 import com.marksilva.fileparser.backendspringboot.services.SpecFileService;
+import com.marksilva.fileparser.backendspringboot.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -15,10 +17,12 @@ import java.io.IOException;
 @RequestMapping("/users/{userID}/specFile")
 public class SpecFileController {
     private SpecFileService specFileService;
+    private UserService userService;
 
     @Autowired
-    public SpecFileController(SpecFileService specFileService) {
+    public SpecFileController(SpecFileService specFileService, UserService userService) {
         this.specFileService = specFileService;
+        this.userService = userService;
     }
 
     /**
@@ -44,9 +48,11 @@ public class SpecFileController {
      */
     @PostMapping("/")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public SpecFile postNewSpecFile(@RequestBody MultipartFile specFileAsJson, @PathVariable String userID) throws InvalidSpecFileException, IOException {
+    public SpecFile postNewSpecFile(@RequestBody MultipartFile specFileAsJson, @PathVariable String userID) throws InvalidSpecFileException, IOException, UserNotFoundException {
         //TODO: Replace UserID with JWT Token
-        return this.specFileService.insertNewSpecFile(specFileAsJson, userID);
+        SpecFile newSpecFile = this.specFileService.insertNewSpecFile(specFileAsJson, userID);
+        this.userService.addSpecFileIdToUser(newSpecFile.getId(), userID);
+        return newSpecFile;
     }
 
     @ExceptionHandler(SpecFileNotFoundException.class)

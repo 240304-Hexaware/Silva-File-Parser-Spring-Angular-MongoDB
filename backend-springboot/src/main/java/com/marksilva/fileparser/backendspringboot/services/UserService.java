@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService implements UserDetailsService {
     private UserRepository userRepository;
@@ -38,6 +40,13 @@ public class UserService implements UserDetailsService {
     public User findByUsername(String username) throws UserNotFoundException{
         return userRepository.findByUsername(username).orElseThrow(() ->
                 new UserNotFoundException("User with username - " + username + " - could not be found"));
+    }
+
+    public User addSpecFileIdToUser(ObjectId specFileId, String userId) throws UserNotFoundException {
+        //TODO: Exception Handling
+        User userToUpdate = this.findById(new ObjectId(userId));
+        userToUpdate.getListOfSpecFileIds().add(specFileId);
+        return this.userRepository.save(userToUpdate);
     }
 
     @Override
