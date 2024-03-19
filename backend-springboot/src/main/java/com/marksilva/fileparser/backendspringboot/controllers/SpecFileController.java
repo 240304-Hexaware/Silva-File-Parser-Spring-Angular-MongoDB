@@ -53,7 +53,7 @@ public class SpecFileController {
         //TODO: Replace UserID with JWT Token
         User userPoster = this.userService.findByUsername(username);
         SpecFile newSpecFile = this.specFileService.insertNewSpecFile(specFileAsJson, userPoster.getId());
-        this.userService.addSpecFileIdWithUsername(newSpecFile.getId(), userPoster);
+        this.userService.addSpecFileId(newSpecFile.getId(), userPoster);
         return newSpecFile;
     }
 }

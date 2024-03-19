@@ -45,8 +45,12 @@ public class ParsedFileService {
             docParsedFileInfo.put(fieldName, fieldValue);
         }
 
-        newParsedFile.setFileInfo(docParsedFileInfo);
         newParsedFile.setUserId(user.getId());
+        newParsedFile.setSpecId(specFile.getId());
+        newParsedFile.setFileInfo(docParsedFileInfo);
+
+        ParsedFile parsedFileWithId = this.parsedFileRepository.save(newParsedFile);
+
         return this.parsedFileRepository.save(newParsedFile);
     }
 

@@ -39,9 +39,14 @@ public class UserService implements UserDetailsService {
         return this.userRepository.save(userToUpdate);
     }
 
-    public User addSpecFileIdWithUsername (ObjectId specFileId, User user){
+    public User addSpecFileId(ObjectId specFileId, User user){
         //TODO: Exception Handling
         user.getListOfSpecFileIds().add(specFileId);
+        return this.userRepository.save(user);
+    }
+
+    public User addParsedFileId(ObjectId parsedFileId, User user){
+        user.getListOfParsedFileIds().add(parsedFileId);
         return this.userRepository.save(user);
     }
 

@@ -42,6 +42,10 @@ public class ParsedFileController {
     public ParsedFile postNewParsedFileWithSpecFileName(@RequestParam MultipartFile flatFile, @PathVariable String specFileName, @PathVariable String username) throws SpecFileNotFoundException, IOException, UserNotFoundException, InvalidInputException {
         User currUser = this.userService.findByUsername(username);
         SpecFile specFile = this.specFileService.findByName(specFileName);
-        return this.parsedFileService.insertFile(flatFile, specFile, currUser);
+        ParsedFile newParsedFile = this.parsedFileService.insertFile(flatFile, specFile, currUser);
+
+        // Add Parsed FileID to User who uploaded the file.
+        this.userService.addParsedFileId(newParsedFile.getId(), currUser);
+        return newParsedFile;
     }
 }

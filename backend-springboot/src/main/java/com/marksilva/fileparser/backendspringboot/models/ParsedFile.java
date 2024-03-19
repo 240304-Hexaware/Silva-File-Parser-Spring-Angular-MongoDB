@@ -11,15 +11,17 @@ public class ParsedFile {
     @Id
     private ObjectId id;
     private ObjectId userId;
+    private ObjectId specId;
     private ObjectId metaDataId;
     private org.bson.Document fileInfo;
 
     public ParsedFile() {
     }
 
-    public ParsedFile(ObjectId id, ObjectId userId, ObjectId metaDataId, org.bson.Document fileInfo) {
+    public ParsedFile(ObjectId id, ObjectId userId, ObjectId specId, ObjectId metaDataId, org.bson.Document fileInfo) {
         this.id = id;
         this.userId = userId;
+        this.specId = specId;
         this.metaDataId = metaDataId;
         this.fileInfo = fileInfo;
     }
@@ -38,6 +40,14 @@ public class ParsedFile {
 
     public void setUserId(ObjectId userId) {
         this.userId = userId;
+    }
+
+    public ObjectId getSpecId() {
+        return specId;
+    }
+
+    public void setSpecId(ObjectId specId) {
+        this.specId = specId;
     }
 
     public ObjectId getMetaDataId() {
