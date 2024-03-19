@@ -1,6 +1,5 @@
 package com.marksilva.fileparser.backendspringboot.services;
 
-import com.marksilva.fileparser.backendspringboot.exceptions.DuplicateUsernameException;
 import com.marksilva.fileparser.backendspringboot.exceptions.UserNotFoundException;
 import com.marksilva.fileparser.backendspringboot.models.User;
 import com.marksilva.fileparser.backendspringboot.repositories.UserRepository;
@@ -11,8 +10,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -35,11 +32,17 @@ public class UserService implements UserDetailsService {
                 new UserNotFoundException("User with username - " + username + " - could not be found"));
     }
 
-    public User addSpecFileIdToUser(ObjectId specFileId, String userId) throws UserNotFoundException {
+    public User addSpecFileIdWithUserId(ObjectId specFileId, String userId) throws UserNotFoundException {
         //TODO: Exception Handling
         User userToUpdate = this.findById(new ObjectId(userId));
         userToUpdate.getListOfSpecFileIds().add(specFileId);
         return this.userRepository.save(userToUpdate);
+    }
+
+    public User addSpecFileIdWithUsername (ObjectId specFileId, User user){
+        //TODO: Exception Handling
+        user.getListOfSpecFileIds().add(specFileId);
+        return this.userRepository.save(user);
     }
 
     @Override

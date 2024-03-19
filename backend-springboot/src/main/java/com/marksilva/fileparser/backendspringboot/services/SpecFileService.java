@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 @Service
 public class SpecFileService {
@@ -42,15 +41,16 @@ public class SpecFileService {
      * @throws InvalidSpecFileException when specFile does not have a name or DocOfFields
      * @throws IOException
      */
-    public SpecFile insertNewSpecFile(MultipartFile specFileAsJson, String userID) throws InvalidSpecFileException, IOException {
+    public SpecFile insertNewSpecFile(MultipartFile specFileAsJson, ObjectId userID) throws InvalidSpecFileException, IOException {
         //TODO: Implement MultiLine parsing
         ObjectMapper objectMapper = new ObjectMapper();
         String specFileContent = HelperForService.parseFileToString(specFileAsJson);
 
         SpecFile newSpecFile = objectMapper.readValue(specFileContent, SpecFile.class);
-        newSpecFile.setCreatedByUserId(new ObjectId(userID));
+        newSpecFile.setCreatedByUserId(userID);
 
         //TODO: Validate that the specFile was added by a valid User
+        //TODO: Validate that the same file is not uploaded twice (Optional)
         if(newSpecFile.getName() == null) {
             throw new InvalidSpecFileException("The specFile must have a 'name' field that is not null");
         }
