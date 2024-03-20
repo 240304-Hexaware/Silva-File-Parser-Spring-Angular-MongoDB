@@ -1,6 +1,7 @@
 package com.marksilva.fileparser.backendspringboot.controllers;
 
 import com.marksilva.fileparser.backendspringboot.exceptions.DuplicateUsernameException;
+import com.marksilva.fileparser.backendspringboot.exceptions.InvalidInputException;
 import com.marksilva.fileparser.backendspringboot.exceptions.UserNotFoundException;
 import com.marksilva.fileparser.backendspringboot.models.User;
 import com.marksilva.fileparser.backendspringboot.services.UserService;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/users")
 public class UserController {
     private UserService userService;
 
@@ -33,7 +35,7 @@ public class UserController {
      * @return The User with the given id
      * @throws UserNotFoundException - User with the given Id could not be found
      */
-    @GetMapping("/users/id/{id}")
+    @GetMapping("id/{id}")
     @ResponseStatus(HttpStatus.OK)
     public User getById(@PathVariable String id) throws UserNotFoundException {
         return userService.findById(new ObjectId(id));
@@ -45,9 +47,15 @@ public class UserController {
      * @return The user with the given username
      * @throws UserNotFoundException - User with the given username could not be found
      */
-    @GetMapping("/users/username/{username}")
+    @GetMapping("username/{username}")
     @ResponseStatus(HttpStatus.OK)
     public User getByUsername(@PathVariable String username) throws UserNotFoundException {
         return userService.findByUsername(username);
+    }
+
+    @PostMapping("")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public User postNewUser(@RequestBody User newUser) throws InvalidInputException, DuplicateUsernameException {
+        return this.userService.registerUser(newUser);
     }
 }
