@@ -2,10 +2,7 @@ package com.marksilva.fileparser.backendspringboot.services;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 
 public class HelperForService {
     /**
@@ -21,5 +18,15 @@ public class HelperForService {
             builder.append((char) reader.read());
         }
         return builder.toString();
+    }
+
+    public static void uploadFileLocally(String fileContent, String filePath, String fileName) throws FileNotFoundException {
+        File theDir = new File(filePath);
+        if(!theDir.exists()){
+            theDir.mkdir();
+        }
+        try (PrintWriter out = new PrintWriter(filePath + "\\" +fileName)){
+            out.println(fileContent);
+        }
     }
 }

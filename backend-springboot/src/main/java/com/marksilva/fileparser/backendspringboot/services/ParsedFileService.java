@@ -48,7 +48,12 @@ public class ParsedFileService {
         newParsedFile.setUserId(user.getId());
         newParsedFile.setSpecId(specFile.getId());
         newParsedFile.setFileInfo(docParsedFileInfo);
-        return this.parsedFileRepository.save(newParsedFile);
+        ParsedFile parsedFileWithId = this.parsedFileRepository.save(newParsedFile);
+
+        //TODO: Replace with Non-Local save
+        HelperForService.uploadFileLocally(fileContent, "src\\main\\resources\\flatFileStorage\\" + user.getUsername(), parsedFileWithId.getId().toHexString());
+
+        return parsedFileWithId;
     }
 
     public List<ParsedFile> findParsedFilesByUserId(ObjectId userID){

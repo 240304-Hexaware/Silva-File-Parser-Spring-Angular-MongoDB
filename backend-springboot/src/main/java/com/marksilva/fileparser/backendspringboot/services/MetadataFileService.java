@@ -22,8 +22,8 @@ public class MetadataFileService {
         );
     }
 
-    public MetadataFile insertMetadataFileLocal(MetadataFile metadataFile){
-        metadataFile.setLocalPathToOrgFile("src/main/java/resources/" + metadataFile.getParsedFileId().toHexString());
+    public MetadataFile insertMetadataFileLocal(MetadataFile metadataFile, String filePath){
+        metadataFile.setLocalPathToOrgFile(filePath);
         return this.metadataRepository.insert(metadataFile);
     }
 }
