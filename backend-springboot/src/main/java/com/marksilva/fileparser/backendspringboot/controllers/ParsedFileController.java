@@ -44,17 +44,17 @@ public class ParsedFileController {
 
     @PostMapping("specFile/{specFileName}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public ParsedFile postNewParsedFileWithSpecFileName(@RequestParam MultipartFile flatFile, @PathVariable String specFileName, @PathVariable String username)
+    public ParsedFile postNewParsedFileWithSpecFileName(@RequestParam MultipartFile flatFile, @RequestParam String flatFileName, @PathVariable String specFileName, @PathVariable String username)
             throws SpecFileNotFoundException, IOException, UserNotFoundException, InvalidInputException {
         User currUser = this.userService.findByUsername(username);
         SpecFile specFile = this.specFileService.findByName(specFileName);
-        ParsedFile newParsedFile = this.parsedFileService.insertFile(flatFile, specFile, currUser);
+        ParsedFile newParsedFile = this.parsedFileService.insertFile(flatFile, flatFileName, specFile, currUser);
 
         // Add Parsed FileID to User who uploaded the file.
         this.userService.addParsedFileId(newParsedFile.getId(), currUser);
         // TODO: Find a way to update MetadataID field in parsedFile
         this.metadataFileService.insertMetadataFileLocal(new MetadataFile(newParsedFile.getId(), LocalDate.now()),
-                "src\\main\\java\\resources\\" + currUser.getUsername() + "\\" + newParsedFile.getId().toHexString());
+                "src\\main\\java\\resources\\" + currUser.getUsername() + "\\" + flatFileName + ".txt");
 
         return newParsedFile;
     }

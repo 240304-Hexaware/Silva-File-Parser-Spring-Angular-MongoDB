@@ -25,7 +25,7 @@ public class ParsedFileService {
     }
 
     //TODO: ADD METADATA ID AND STORE FLAT FILE TO BLOCK STORAGE
-    public ParsedFile insertFile(MultipartFile flatFile, SpecFile specFile, User user) throws IOException, InvalidInputException {
+    public ParsedFile insertFile(MultipartFile flatFile, String flatFileName, SpecFile specFile, User user) throws IOException, InvalidInputException {
         //TODO: Create New EXCEPTION if wanted
         //User Cannot use specfile that it did not create
         if(!user.getListOfSpecFileIds().contains(specFile.getId())){
@@ -48,12 +48,11 @@ public class ParsedFileService {
         newParsedFile.setUserId(user.getId());
         newParsedFile.setSpecId(specFile.getId());
         newParsedFile.setFileInfo(docParsedFileInfo);
-        ParsedFile parsedFileWithId = this.parsedFileRepository.save(newParsedFile);
 
         //TODO: Replace with Non-Local save
-        HelperForService.uploadFileLocally(fileContent, "src\\main\\resources\\flatFileStorage\\" + user.getUsername(), parsedFileWithId.getId().toHexString());
+        HelperForService.uploadFileLocally(fileContent, "src\\main\\resources\\flatFileStorage\\" + user.getUsername(), flatFileName + ".txt");
 
-        return parsedFileWithId;
+        return this.parsedFileRepository.save(newParsedFile);
     }
 
     public List<ParsedFile> findParsedFilesByUserId(ObjectId userID){
