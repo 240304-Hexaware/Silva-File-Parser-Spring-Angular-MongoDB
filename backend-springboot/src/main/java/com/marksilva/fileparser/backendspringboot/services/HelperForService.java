@@ -2,8 +2,10 @@ package com.marksilva.fileparser.backendspringboot.services;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 
 public class HelperForService {
     /**
