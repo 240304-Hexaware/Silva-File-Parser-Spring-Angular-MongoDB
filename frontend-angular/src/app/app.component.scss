@@ -1,0 +1,8 @@
+//Fills all of the browser size without overflow
+.wrapper {
+  height: auto;
+  padding: 20px;
+  width: 100%;
+  flex-grow: 1; //Wrapper grows automatically
+  box-sizing: border-box; //Prevents overflow
+}
