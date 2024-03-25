@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { User } from '../../types';
-import { error } from 'console';
+import { LoginComponent } from '../components/login/login.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [],
+  imports: [LoginComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })

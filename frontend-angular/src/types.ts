@@ -29,9 +29,9 @@ export interface Options {
 
 // TODO: Get rid of password
 export interface User {
-  id: any; //Find a type for objectID
+  id?: any; //Find a type for objectID
   username: string;
   password: string;
-  listOfSpecFileIds: any[];
-  listOfParsedFileIds: any[];
+  listOfSpecFileIds?: any[];
+  listOfParsedFileIds?: any[];
 }

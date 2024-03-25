@@ -1,0 +1,26 @@
+<p>login works!</p>
+
+<div class="wrapper column align-center">
+  <img
+    src="../../../assets/image/logo-color.svg"
+    alt="File Parser Logo"
+    class="logo"
+  />
+
+  <h1 class="mb-25">Log in</h1>
+
+  <div class="row gap-05 mb-5">
+    <span>Username:</span>
+    <input type="text" [(ngModel)]="user.username" />
+  </div>
+
+  <div class="row gap-05 mb-15">
+    <span>Password:</span>
+    <input type="text" [(ngModel)]="user.password" />
+  </div>
+
+  <div class="row align-center gap-2">
+    <button type="button" (click)="onLogin()">Log in</button>
+    <button type="button" (click)="onRegister()">Register</button>
+  </div>
+</div>
