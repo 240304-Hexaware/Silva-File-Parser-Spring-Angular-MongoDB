@@ -18,7 +18,7 @@ export interface Options {
           | ReadonlyArray<string | number | boolean>;
       };
   reportProgress?: boolean;
-  responseType?: 'json';
+  responseType?: any;
   withCredentials?: boolean;
   transferCache?:
     | {
@@ -34,4 +34,11 @@ export interface User {
   password: string;
   listOfSpecFileIds?: any[];
   listOfParsedFileIds?: any[];
+}
+
+export interface ParsedFile {
+  id?: { date: string; timestamp: number };
+  userId: { date: string; timestamp: number };
+  specId: { date: string; timestamp: number };
+  fileInfo: {};
 }

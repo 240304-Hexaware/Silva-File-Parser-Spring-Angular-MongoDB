@@ -87,6 +87,14 @@ app-root {
   justify-content: center;
 }
 
+.align-left {
+  align-content: flex-start;
+}
+
+.align-right {
+  align-content: flex-end;
+}
+
 .hidden {
   display: none;
 }

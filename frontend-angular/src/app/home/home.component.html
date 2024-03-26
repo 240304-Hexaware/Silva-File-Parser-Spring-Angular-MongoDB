@@ -1,1 +1,13 @@
-<app-login></app-login>
+<!-- TODO: Enable Login after getting fileparsing done -->
+<!-- <app-login></app-login> -->
+<div class="wrapper column full-center">
+  <app-files-main-menu
+    [currUser]="hardcodedUser"
+    (displayParsedFiles)="setIsParsedFileVisible($event)"
+  ></app-files-main-menu>
+  <app-parsed-file-view
+    *ngIf="isParsedFileVisible"
+    [currUser]="currUser"
+    (displayParsedFiles)="setIsParsedFileVisible($event)"
+  ></app-parsed-file-view>
+</div>
