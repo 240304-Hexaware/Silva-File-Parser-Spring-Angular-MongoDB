@@ -22,6 +22,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users/{username}/file")
+@CrossOrigin(origins = "*")
 public class ParsedFileController {
     private ParsedFileService parsedFileService;
     private SpecFileService specFileService;

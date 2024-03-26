@@ -23,6 +23,8 @@ public class UserService{
                 new UserNotFoundException("User with id - " + id + " - could not be found "));
     }
 
+    //TODO: Use a UserDTO instead of regular user where password is not sent back to the user.
+    // Maybe include token as well
     public User findByUsername(String username) throws UserNotFoundException{
         return userRepository.findByUsername(username).orElseThrow(() ->
                 new UserNotFoundException("User with username - " + username + " - could not be found"));
