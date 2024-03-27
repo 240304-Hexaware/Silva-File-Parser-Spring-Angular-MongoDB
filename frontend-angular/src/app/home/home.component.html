@@ -5,6 +5,8 @@
     [currUser]="hardcodedUser"
     (displayParsedFiles)="setIsParsedFileVisible($event)"
   ></app-files-main-menu>
+
+  <!-- Dynamic Components -->
   <app-parsed-file-view
     *ngIf="isParsedFileVisible"
     [currUser]="currUser"

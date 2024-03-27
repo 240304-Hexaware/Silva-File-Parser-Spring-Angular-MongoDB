@@ -7,3 +7,9 @@
     <button type="button" (click)="onCreateSpecFile()">Create Spec File</button>
   </div>
 </div>
+
+<!-- Popups -->
+<app-add-spec-file-popup
+  [(display)]="displayAddSpecFilePopup"
+  (fileChange)="fileChange($event)"
+></app-add-spec-file-popup>

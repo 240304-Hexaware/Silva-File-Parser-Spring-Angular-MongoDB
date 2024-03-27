@@ -42,3 +42,10 @@ export interface ParsedFile {
   specId: { date: string; timestamp: number };
   fileInfo: {};
 }
+
+export interface SpecFile {
+  id?: { date: string; timestamp: number };
+  createdUserId: { date: string; timestamp: number };
+  name: string;
+  docOfFields: {};
+}

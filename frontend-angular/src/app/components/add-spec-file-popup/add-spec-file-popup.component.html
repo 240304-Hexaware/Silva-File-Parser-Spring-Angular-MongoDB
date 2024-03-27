@@ -1,0 +1,18 @@
+<p-dialog
+  header="Add Spec File"
+  [(visible)]="display"
+  [modal]="true"
+  [closable]="false"
+>
+  <p>Upload Spec File</p>
+  <input
+    type="file"
+    class="file-upload"
+    onchange="console.log(event.target.files)"
+    (change)="onFileSelected($event)"
+  />
+  <p-footer>
+    <button type="button" (click)="onConfirm()" label="Confirm">Confirm</button>
+    <button type="button" (click)="onCancel()" label="Cancel">Cancel</button>
+  </p-footer>
+</p-dialog>
