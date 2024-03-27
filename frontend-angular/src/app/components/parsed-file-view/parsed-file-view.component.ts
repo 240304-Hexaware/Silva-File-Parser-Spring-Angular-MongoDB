@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ParsedFile, User } from '../../../types';
 import { ParsedFileViewService } from '../services/parsed-file-view.service';
 import { CommonModule } from '@angular/common';
-import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-parsed-file-view',
@@ -12,8 +11,7 @@ import { BehaviorSubject } from 'rxjs';
   styleUrl: './parsed-file-view.component.scss',
 })
 export class ParsedFileViewComponent {
-  listOfParsedFiles: BehaviorSubject<ParsedFile[]> =
-    this.parsedFileViewService.listOfParsedFiles;
+  listOfParsedFiles: ParsedFile[] = [];
   @Input() currUser!: User;
   @Output() displayParsedFiles: EventEmitter<boolean> =
     new EventEmitter<boolean>();
@@ -26,7 +24,7 @@ export class ParsedFileViewComponent {
 
   // TODO: Understand why ngOnInit does not work here
   // Responds after Angular checks the content projected into the directive
-  // ngDoCheck(): void {
-  //   this.listOfParsedFiles = this.parsedFileViewService.getListOfParsedFiles();
-  // }
+  ngDoCheck(): void {
+    this.listOfParsedFiles = this.parsedFileViewService.getListOfParsedFiles();
+  }
 }
