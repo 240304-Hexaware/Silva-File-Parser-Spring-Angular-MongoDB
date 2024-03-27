@@ -45,8 +45,6 @@ export class FilesMainMenuComponent {
   fileChange(event: File): void {
     const formData = new FormData();
     formData.append('specFileAsJson', event, event.name);
-    console.log(event);
-    console.log(formData);
     this.specFileApiService.postSpecFile(this.currUser, formData).subscribe({});
   }
 

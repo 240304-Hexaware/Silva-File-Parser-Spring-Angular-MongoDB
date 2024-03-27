@@ -30,6 +30,7 @@ export class AddSpecFilePopupComponent {
     this.displayChange.emit(this.display);
   }
 
+  // Bind Uploaded file to private file
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
 
