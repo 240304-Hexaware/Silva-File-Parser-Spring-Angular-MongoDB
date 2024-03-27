@@ -17,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users/{username}/specFile")
+@CrossOrigin(origins = "*")
 public class SpecFileController {
     private SpecFileService specFileService;
     private UserService userService;
