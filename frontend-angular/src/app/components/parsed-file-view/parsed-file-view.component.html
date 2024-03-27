@@ -9,7 +9,7 @@
     />
   </div>
   <div class="files-div">
-    <div *ngFor="let parsedFile of listOfParsedFiles">
+    <div *ngFor="let parsedFile of listOfParsedFiles | async">
       {{ "{" }}
       <div *ngFor="let fileInfo of parsedFile.fileInfo | keyvalue">
         {{ fileInfo.key }}: {{ fileInfo.value }},

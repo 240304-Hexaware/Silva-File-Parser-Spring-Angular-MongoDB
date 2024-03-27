@@ -50,7 +50,7 @@ public class ParsedFileService {
         newParsedFile.setFileInfo(docParsedFileInfo);
 
         //TODO: Replace with Non-Local save
-        HelperForService.uploadFileLocally(fileContent, "src\\main\\resources\\flatFileStorage\\" + user.getUsername(), flatFileName + ".txt");
+        HelperForService.uploadFileLocally(fileContent, "src\\main\\resources\\flatFileStorage\\" + user.getUsername(), flatFileName);
 
         return this.parsedFileRepository.save(newParsedFile);
     }

@@ -6,6 +6,7 @@ import { DialogModule } from 'primeng/dialog';
 import { AddSpecFilePopupComponent } from '../add-spec-file-popup/add-spec-file-popup.component';
 import { SpecFileApiService } from '../../services/spec-file-api.service';
 import { AddParsedFilePopupComponent } from '../add-parsed-file-popup/add-parsed-file-popup.component';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-files-main-menu',
@@ -21,7 +22,8 @@ import { AddParsedFilePopupComponent } from '../add-parsed-file-popup/add-parsed
 export class FilesMainMenuComponent {
   @Input() currUser!: User;
   //TODO: Consider removing this variable
-  listOfParsedFiles: ParsedFile[] = [];
+  listOfParsedFiles: BehaviorSubject<ParsedFile[]> =
+    this.parsedFileViewService.listOfParsedFiles;
   listOfSpecFiles: SpecFile[] = [];
   specFileForParsing: SpecFile | null = null;
 
@@ -43,7 +45,6 @@ export class FilesMainMenuComponent {
   }
 
   onParseFiles(): void {
-    console.log('Parse File Button clicked');
     this.fetchAllSpecFilesOfUser();
     this.displayAddParsedFilePopup = true;
   }
@@ -61,20 +62,22 @@ export class FilesMainMenuComponent {
   parseFileChange(event: EventFlatAndSpec): void {
     const formData = new FormData();
     formData.append('flatFile', event.file, event.file.name);
-    formData.append('flatFileName', event.specFile.name);
+    formData.append('flatFileName', event.file.name);
     this.parsedFilesService
       .postParsedFile(this.currUser, event.specFile, formData)
       .subscribe({});
     //TODO: Find a way to refresh View Files after posting
-    this.onViewFiles();
+    this.fetchAllParsedFilesOfUser();
   }
 
   fetchAllParsedFilesOfUser(): void {
     this.parsedFilesService
       .getAllFilesByUser(this.currUser)
       .subscribe((data: ParsedFile[]) => {
-        this.listOfParsedFiles = data;
-        this.parsedFileViewService.setListOfParsedFiles(this.listOfParsedFiles);
+        this.listOfParsedFiles.next(data);
+        this.parsedFileViewService.setListOfParsedFiles(
+          this.listOfParsedFiles.value
+        );
       });
   }
 
