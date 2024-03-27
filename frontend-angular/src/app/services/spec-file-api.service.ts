@@ -12,7 +12,12 @@ export class SpecFileApiService {
 
   //Update Dymically what the username is.
   baseURL = (): string =>
-    `http://localhost:8080/users/${this.username}/specFile/`;
+    `http://localhost:8080/users/${this.username}/specFile`;
+
+  getAllFilesByUser = (user: User): Observable<SpecFile[]> => {
+    this.username = user.username;
+    return this.apiService.get(this.baseURL(), { responseType: 'json' });
+  };
 
   postSpecFile = (user: User, formData: FormData): Observable<any> => {
     this.username = user.username;

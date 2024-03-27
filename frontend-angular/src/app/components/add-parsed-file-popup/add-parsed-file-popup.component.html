@@ -1,0 +1,29 @@
+<p-dialog
+  header="Parse new FlatFile"
+  [(visible)]="display"
+  [modal]="true"
+  [closable]="false"
+>
+  <div class="column" class="">
+    <div>
+      <p>Pick SpecFile to Parse with</p>
+      <p-dropdown
+        [(ngModel)]="specFile"
+        [options]="listOfSpecFiles"
+        [showClear]="true"
+        optionLabel="name"
+        placeholder="Select a SpecFile"
+        appendTo="body"
+      ></p-dropdown>
+    </div>
+    <div>
+      <p>Upload Spec File</p>
+      <input type="file" (change)="onFileSelected($event)" />
+    </div>
+  </div>
+
+  <p-footer>
+    <button type="button" (click)="onConfirm()" label="Confirm">Confirm</button>
+    <button type="button" (click)="onCancel()" label="Cancel">Cancel</button>
+  </p-footer>
+</p-dialog>

@@ -31,9 +31,9 @@ export class AddSpecFilePopupComponent {
   }
 
   // Bind Uploaded file to private file
+  //TODO: Find better type for event
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
-
     if (file) {
       this.file = file;
     }

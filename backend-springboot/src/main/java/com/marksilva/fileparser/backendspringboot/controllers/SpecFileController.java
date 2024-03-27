@@ -56,7 +56,7 @@ public class SpecFileController {
      * @throws InvalidSpecFileException when SpecFile does not have a name or docOfFields.
      * @throws IOException
      */
-    @PostMapping("/")
+    @PostMapping("")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public SpecFile postNewSpecFile(@RequestBody MultipartFile specFileAsJson, @PathVariable String username) throws InvalidSpecFileException, IOException, UserNotFoundException {
         //TODO: Replace UserID with JWT Token

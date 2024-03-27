@@ -40,6 +40,7 @@ export interface ParsedFile {
   id?: { date: string; timestamp: number };
   userId: { date: string; timestamp: number };
   specId: { date: string; timestamp: number };
+  metaDataId: { date: string; timestamp: number };
   fileInfo: {};
 }
 
@@ -48,4 +49,10 @@ export interface SpecFile {
   createdUserId: { date: string; timestamp: number };
   name: string;
   docOfFields: {};
+}
+
+// Helpful Interfaces For Events
+export interface EventFlatAndSpec {
+  file: File;
+  specFile: SpecFile;
 }

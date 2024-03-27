@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
-import { ParsedFile, User } from '../../types';
+import { ParsedFile, SpecFile, User } from '../../types';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -15,7 +15,19 @@ export class ParsedFilesService {
 
   getAllFilesByUser = (user: User): Observable<ParsedFile[]> => {
     this.username = user.username;
-    console.log(this.baseURL());
     return this.apiService.get(this.baseURL(), { responseType: 'json' });
+  };
+
+  postParsedFile = (
+    user: User,
+    specFile: SpecFile,
+    formData: FormData
+  ): Observable<ParsedFile> => {
+    this.username = user.username;
+    return this.apiService.post(
+      `${this.baseURL()}/specFile/${specFile.name}`,
+      formData,
+      {}
+    );
   };
 }

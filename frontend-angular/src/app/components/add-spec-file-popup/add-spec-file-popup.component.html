@@ -5,12 +5,7 @@
   [closable]="false"
 >
   <p>Upload Spec File</p>
-  <input
-    type="file"
-    class="file-upload"
-    onchange="console.log(event.target.files)"
-    (change)="onFileSelected($event)"
-  />
+  <input type="file" (change)="onFileSelected($event)" />
   <p-footer>
     <button type="button" (click)="onConfirm()" label="Confirm">Confirm</button>
     <button type="button" (click)="onCancel()" label="Cancel">Cancel</button>
