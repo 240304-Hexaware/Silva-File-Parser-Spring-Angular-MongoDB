@@ -12,14 +12,13 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './add-parsed-file-popup.component.scss',
 })
 export class AddParsedFilePopupComponent {
+  @Input() display: boolean = false;
+  @Output() displayChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   //TODO: Find Better solution than !
   file!: File;
   specFile!: SpecFile;
 
   @Input() listOfSpecFiles: SpecFile[] = [];
-
-  @Input() display: boolean = false;
-  @Output() displayChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @Output() fileChange: EventEmitter<EventFlatAndSpec> =
     new EventEmitter<EventFlatAndSpec>();

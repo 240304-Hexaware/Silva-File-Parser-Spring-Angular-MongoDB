@@ -20,14 +20,13 @@ import { AddParsedFilePopupComponent } from '../add-parsed-file-popup/add-parsed
 })
 export class FilesMainMenuComponent {
   @Input() currUser!: User;
-  //TODO: Consider removing this variable
-  listOfParsedFiles: ParsedFile[] = [];
   listOfSpecFiles: SpecFile[] = [];
-  specFileForParsing: SpecFile | null = null;
 
+  //FilesMainMenu Component displays Popups (This Class)
   displayAddSpecFilePopup: boolean = false;
   displayAddParsedFilePopup: boolean = false;
 
+  //Home Component Displays Parsed Files
   @Output() displayParsedFiles: EventEmitter<boolean> =
     new EventEmitter<boolean>();
 
@@ -37,13 +36,22 @@ export class FilesMainMenuComponent {
     private specFileApiService: SpecFileApiService
   ) {}
 
+  /**
+   * When the View Files button is clicked.
+   * Fetch all the Files.
+   * Then emit that the parsed files should be displayed
+   */
   onViewFiles(): void {
     this.fetchAllParsedFilesOfUser();
     this.displayParsedFiles.emit(true);
   }
 
+  /**
+   * When Parse File Button is clicked
+   * Fetch All SpecFIles of the User, so it can be sent to AddSpecFilePopup.
+   * Also set display to true for popup
+   */
   onParseFiles(): void {
-    console.log('Parse File Button clicked');
     this.fetchAllSpecFilesOfUser();
     this.displayAddParsedFilePopup = true;
   }
@@ -66,15 +74,17 @@ export class FilesMainMenuComponent {
       .postParsedFile(this.currUser, event.specFile, formData)
       .subscribe({});
     //TODO: Find a way to refresh View Files after posting
-    this.onViewFiles();
   }
 
+  /**
+   * Fetch All the Parsed file of the current User.
+   * Set the list of acquired files tot he parsedFileViewService which stores the data.
+   */
   fetchAllParsedFilesOfUser(): void {
     this.parsedFilesService
       .getAllFilesByUser(this.currUser)
       .subscribe((data: ParsedFile[]) => {
-        this.listOfParsedFiles = data;
-        this.parsedFileViewService.setListOfParsedFiles(this.listOfParsedFiles);
+        this.parsedFileViewService.setListOfParsedFiles(data);
       });
   }
 
