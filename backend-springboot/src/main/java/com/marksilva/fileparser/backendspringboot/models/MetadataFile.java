@@ -14,7 +14,7 @@ public class MetadataFile {
     private String localPathToOrgFile;
     private LocalDate dateFileParsed;
 
-    public MetadataFile(){
+    public MetadataFile() {
     }
 
     public MetadataFile(ObjectId id, ObjectId parsedFileId, String localPathToOrgFile, LocalDate dateFileParsed) {
@@ -26,6 +26,12 @@ public class MetadataFile {
 
     public MetadataFile(ObjectId parsedFileId, LocalDate dateFileParsed) {
         this.parsedFileId = parsedFileId;
+        this.dateFileParsed = dateFileParsed;
+    }
+
+    public MetadataFile(ObjectId parsedFileId, String localPathToOrgFile, LocalDate dateFileParsed) {
+        this.parsedFileId = parsedFileId;
+        this.localPathToOrgFile = localPathToOrgFile;
         this.dateFileParsed = dateFileParsed;
     }
 

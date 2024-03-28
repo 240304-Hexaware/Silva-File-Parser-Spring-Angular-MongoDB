@@ -3,11 +3,14 @@ package com.marksilva.fileparser.backendspringboot.services;
 import com.marksilva.fileparser.backendspringboot.exceptions.DuplicateUsernameException;
 import com.marksilva.fileparser.backendspringboot.exceptions.InvalidInputException;
 import com.marksilva.fileparser.backendspringboot.exceptions.UserNotFoundException;
+import com.marksilva.fileparser.backendspringboot.models.ParsedFile;
 import com.marksilva.fileparser.backendspringboot.models.User;
 import com.marksilva.fileparser.backendspringboot.repositories.UserRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserService{
@@ -58,6 +61,13 @@ public class UserService{
 
     public User addParsedFileId(ObjectId parsedFileId, User user){
         user.getListOfParsedFileIds().add(parsedFileId);
+        return this.userRepository.save(user);
+    }
+
+    public User addListOfParsedFileId(List<ParsedFile> listOfParsedFiles, User user) {
+        for (ParsedFile ps : listOfParsedFiles) {
+            user.getListOfParsedFileIds().add(ps.getUserId());
+        }
         return this.userRepository.save(user);
     }
 }
