@@ -61,6 +61,7 @@ export class FilesMainMenuComponent {
 
   onParseFileChange(event: EventFlatAndSpec): void {
     this.parsedFileViewService.postParsedFile(event, this.currUser);
+    //TODO: Find a way to refresh Parsed View Files after posting
   }
 
   onSpecFileChange(event: File): void {

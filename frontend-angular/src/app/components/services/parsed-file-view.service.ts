@@ -45,6 +45,6 @@ export class ParsedFileViewService {
     this.parsedFilesService
       .postParsedFile(user, event.specFile, formData)
       .subscribe({});
-    //TODO: Find a way to refresh View Files after posting
+    //TODO: Find a way to refresh Parsed View Files after posting
   }
 }
