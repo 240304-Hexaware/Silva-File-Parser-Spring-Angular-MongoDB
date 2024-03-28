@@ -56,12 +56,16 @@ public class ParsedFileService {
             listOfParsedFiles.add(newParsedFile);
         }
         //TODO: Replace with Non-Local save
-        HelperForService.uploadFileLocally(fileContent, "src\\main\\resources\\flatFileStorage\\" + user.getUsername(), flatFileName + ".txt");
+        HelperForService.uploadFileLocally(fileContent, "src\\main\\resources\\flatFileStorage\\" + user.getUsername(), flatFileName);
 
         return this.parsedFileRepository.saveAll(listOfParsedFiles);
     }
 
     public List<ParsedFile> findParsedFilesByUserId(ObjectId userID) {
         return this.parsedFileRepository.findByUserId(userID);
+    }
+
+    public List<ParsedFile> findParsedFilesByUserIdAndSpecFileId(ObjectId userID, ObjectId specFileID) {
+        return this.parsedFileRepository.findByUserIdAndSpecId(userID, specFileID);
     }
 }

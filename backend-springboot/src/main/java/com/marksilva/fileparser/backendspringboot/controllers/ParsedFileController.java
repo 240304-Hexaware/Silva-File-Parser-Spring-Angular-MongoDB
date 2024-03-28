@@ -41,6 +41,16 @@ public class ParsedFileController {
         return this.parsedFileService.findParsedFilesByUserId(this.userService.findByUsername(username).getId());
     }
 
+    @GetMapping("specFile/{specFileName}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ParsedFile> getParsedFilesByUserIdAndSpecFileId(@PathVariable String username,  @PathVariable String specFileName) throws UserNotFoundException, SpecFileNotFoundException {
+        // TODO: Reduce amount of queries by using ID instead, needs refactor of URL/URI
+        User user = this.userService.findByUsername(username);
+        SpecFile specFile = this.specFileService.findByName(specFileName);
+
+        return this.parsedFileService.findParsedFilesByUserIdAndSpecFileId(user.getId(), specFile.getId());
+    }
+
     @PostMapping("specFile/{specFileName}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public List<ParsedFile> postNewParsedFileWithSpecFileName(@RequestParam MultipartFile flatFile, @RequestParam String flatFileName, @PathVariable String specFileName, @PathVariable String username) throws SpecFileNotFoundException, IOException, UserNotFoundException, InvalidInputException {

@@ -12,4 +12,5 @@ import java.util.Optional;
 @Repository
 public interface ParsedFileRepository extends MongoRepository<ParsedFile, ObjectId> {
     List<ParsedFile> findByUserId(ObjectId userId);
+    List<ParsedFile> findByUserIdAndSpecId(ObjectId userId, ObjectId specId);
 }
