@@ -69,7 +69,7 @@ export class FilesMainMenuComponent {
   parseFileChange(event: EventFlatAndSpec): void {
     const formData = new FormData();
     formData.append('flatFile', event.file, event.file.name);
-    formData.append('flatFileName', event.specFile.name);
+    formData.append('flatFileName', event.file.name);
     this.parsedFilesService
       .postParsedFile(this.currUser, event.specFile, formData)
       .subscribe({});
