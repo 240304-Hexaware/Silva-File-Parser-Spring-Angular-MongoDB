@@ -44,16 +44,15 @@ public class ParsedFileController {
     @PostMapping("specFile/{specFileName}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public List<ParsedFile> postNewParsedFileWithSpecFileName(@RequestParam MultipartFile flatFile, @RequestParam String flatFileName, @PathVariable String specFileName, @PathVariable String username) throws SpecFileNotFoundException, IOException, UserNotFoundException, InvalidInputException {
+        // TODO: Can reduce queries if we use Object ID instead of just the names
         User currUser = this.userService.findByUsername(username);
         SpecFile specFile = this.specFileService.findByName(specFileName);
         List<ParsedFile> listOfParsedFiles = this.parsedFileService.insertFile(flatFile, flatFileName, specFile, currUser);
 
-        // Add Parsed FileID to User who uploaded the file.
-//        this.userService.addParsedFileId(newParsedFile.getId(), currUser);
+        // Add ParsedFile IDs to User who uploaded the files
         this.userService.addListOfParsedFileId(listOfParsedFiles, currUser);
         // TODO: Find a way to update MetadataID field in parsedFile
-//        this.metadataFileService.insertMetadataFileLocal(new MetadataFile(newParsedFile.getId(), LocalDate.now()),
-//                "src\\main\\java\\resources\\" + currUser.getUsername() + "\\" + flatFileName + ".txt");
+        // Insert MetaData File related to each ParsedFile
         this.metadataFileService.insertListOfMetadataFileLocal(listOfParsedFiles, "src\\main\\java\\resources\\" + currUser.getUsername() + "\\" + flatFileName + ".txt");
 
         return listOfParsedFiles;
