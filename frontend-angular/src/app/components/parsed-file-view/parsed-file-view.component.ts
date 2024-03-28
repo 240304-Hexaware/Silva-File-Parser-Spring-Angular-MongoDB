@@ -5,8 +5,6 @@ import { CommonModule } from '@angular/common';
 import { SpecFileViewService } from '../services/spec-file-view.service';
 import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
-import { SpecFileApiService } from '../../services/spec-file-api.service';
-import { ParsedFilesService } from '../../services/parsed-files.service';
 
 @Component({
   selector: 'app-parsed-file-view',
@@ -27,8 +25,7 @@ export class ParsedFileViewComponent {
 
   constructor(
     private parsedFileViewService: ParsedFileViewService,
-    private specFileViewService: SpecFileViewService,
-    private parseFilesService: ParsedFilesService
+    private specFileViewService: SpecFileViewService
   ) {}
 
   onClose(): void {
@@ -36,23 +33,19 @@ export class ParsedFileViewComponent {
   }
 
   onChooseSpecFile(): void {
-    this.fetchAllParseFilesOfUserBySpecId();
-    this.specFileChange.emit(this.specFile);
+    this.parsedFileViewService.fetchAllParseFilesOfUserBySpecId(
+      this.currUser,
+      this.specFile
+    );
   }
 
+  // ngOnInit(): void {
+  //   this.listOfSpecFiles = this.specFileViewService.getListOfSpecFiles();
+  // }
   // TODO: Understand why ngOnInit does not work here
   // Responds after Angular checks the content projected into the directive
   ngDoCheck(): void {
     this.listOfParsedFiles = this.parsedFileViewService.getListOfParsedFiles();
     this.listOfSpecFiles = this.specFileViewService.getListOfSpecFiles();
-  }
-
-  fetchAllParseFilesOfUserBySpecId(): void {
-    this.parseFilesService
-      .getAllFilesOfUserBySpecId(this.currUser, this.specFile)
-      .subscribe((data: ParsedFile[]) => {
-        this.listOfParsedFiles = data;
-        this.parsedFileViewService.setListOfParsedFiles(this.listOfParsedFiles);
-      });
   }
 }

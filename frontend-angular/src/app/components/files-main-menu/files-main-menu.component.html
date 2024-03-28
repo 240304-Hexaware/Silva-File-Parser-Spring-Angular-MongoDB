@@ -11,11 +11,11 @@
 <!-- Popups -->
 <app-add-spec-file-popup
   [(display)]="displayAddSpecFilePopup"
-  (fileChange)="specFileChange($event)"
+  (fileChange)="onSpecFileChange($event)"
 ></app-add-spec-file-popup>
 
 <app-add-parsed-file-popup
   [(display)]="displayAddParsedFilePopup"
   [listOfSpecFiles]="listOfSpecFiles"
-  (fileChange)="parseFileChange($event)"
+  (fileChange)="onParseFileChange($event)"
 ></app-add-parsed-file-popup>

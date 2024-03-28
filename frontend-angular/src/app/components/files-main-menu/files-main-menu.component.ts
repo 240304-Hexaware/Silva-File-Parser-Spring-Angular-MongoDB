@@ -1,10 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { EventFlatAndSpec, ParsedFile, SpecFile, User } from '../../../types';
-import { ParsedFilesService } from '../../services/parsed-files.service';
 import { ParsedFileViewService } from '../services/parsed-file-view.service';
 import { DialogModule } from 'primeng/dialog';
 import { AddSpecFilePopupComponent } from '../add-spec-file-popup/add-spec-file-popup.component';
-import { SpecFileApiService } from '../../services/spec-file-api.service';
 import { AddParsedFilePopupComponent } from '../add-parsed-file-popup/add-parsed-file-popup.component';
 import { SpecFileViewService } from '../services/spec-file-view.service';
 
@@ -32,9 +30,7 @@ export class FilesMainMenuComponent {
     new EventEmitter<boolean>();
 
   constructor(
-    private parsedFilesService: ParsedFilesService,
     private parsedFileViewService: ParsedFileViewService,
-    private specFileApiService: SpecFileApiService,
     private specFileViewService: SpecFileViewService
   ) {}
 
@@ -44,7 +40,7 @@ export class FilesMainMenuComponent {
    * Then emit that the parsed files should be displayed
    */
   onViewFiles(): void {
-    this.fetchAllParsedFilesOfUser();
+    this.parsedFileViewService.fetchAllParsedFilesOfUser(this.currUser);
     this.displayParsedFiles.emit(true);
   }
 
@@ -54,7 +50,8 @@ export class FilesMainMenuComponent {
    * Also set display to true for popup
    */
   onParseFiles(): void {
-    this.fetchAllSpecFilesOfUser();
+    this.specFileViewService.fetchAllSpecFilesOfUser(this.currUser);
+    this.listOfSpecFiles = this.specFileViewService.getListOfSpecFiles();
     this.displayAddParsedFilePopup = true;
   }
 
@@ -62,40 +59,11 @@ export class FilesMainMenuComponent {
     this.displayAddSpecFilePopup = true;
   }
 
-  specFileChange(event: File): void {
-    const formData = new FormData();
-    formData.append('specFileAsJson', event, event.name);
-    this.specFileApiService.postSpecFile(this.currUser, formData).subscribe({});
+  onParseFileChange(event: EventFlatAndSpec): void {
+    this.parsedFileViewService.postParsedFile(event, this.currUser);
   }
 
-  parseFileChange(event: EventFlatAndSpec): void {
-    const formData = new FormData();
-    formData.append('flatFile', event.file, event.file.name);
-    formData.append('flatFileName', event.file.name);
-    this.parsedFilesService
-      .postParsedFile(this.currUser, event.specFile, formData)
-      .subscribe({});
-    //TODO: Find a way to refresh View Files after posting
-  }
-
-  /**
-   * Fetch All the Parsed file of the current User.
-   * Set the list of acquired files tot he parsedFileViewService which stores the data.
-   */
-  fetchAllParsedFilesOfUser(): void {
-    this.parsedFilesService
-      .getAllFilesByUser(this.currUser)
-      .subscribe((data: ParsedFile[]) => {
-        this.parsedFileViewService.setListOfParsedFiles(data);
-      });
-  }
-
-  fetchAllSpecFilesOfUser(): void {
-    this.specFileApiService
-      .getAllFilesByUser(this.currUser)
-      .subscribe((data: SpecFile[]) => {
-        this.listOfSpecFiles = data;
-        this.specFileViewService.setListOfSpecFiles(this.listOfSpecFiles);
-      });
+  onSpecFileChange(event: File): void {
+    this.specFileViewService.postSpecFile(event, this.currUser);
   }
 }
