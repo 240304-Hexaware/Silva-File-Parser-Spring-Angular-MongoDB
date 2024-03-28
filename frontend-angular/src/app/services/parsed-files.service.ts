@@ -18,6 +18,16 @@ export class ParsedFilesService {
     return this.apiService.get(this.baseURL(), { responseType: 'json' });
   };
 
+  getAllFilesOfUserBySpecId = (
+    user: User,
+    specFile: SpecFile
+  ): Observable<ParsedFile[]> => {
+    this.username = user.username;
+    return this.apiService.get(`${this.baseURL()}/specFile/${specFile.name}`, {
+      responseType: 'json',
+    });
+  };
+
   postParsedFile = (
     user: User,
     specFile: SpecFile,

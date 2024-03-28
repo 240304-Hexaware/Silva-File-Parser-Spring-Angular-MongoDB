@@ -6,6 +6,7 @@ import { DialogModule } from 'primeng/dialog';
 import { AddSpecFilePopupComponent } from '../add-spec-file-popup/add-spec-file-popup.component';
 import { SpecFileApiService } from '../../services/spec-file-api.service';
 import { AddParsedFilePopupComponent } from '../add-parsed-file-popup/add-parsed-file-popup.component';
+import { SpecFileViewService } from '../services/spec-file-view.service';
 
 @Component({
   selector: 'app-files-main-menu',
@@ -33,7 +34,8 @@ export class FilesMainMenuComponent {
   constructor(
     private parsedFilesService: ParsedFilesService,
     private parsedFileViewService: ParsedFileViewService,
-    private specFileApiService: SpecFileApiService
+    private specFileApiService: SpecFileApiService,
+    private specFileViewService: SpecFileViewService
   ) {}
 
   /**
@@ -93,6 +95,7 @@ export class FilesMainMenuComponent {
       .getAllFilesByUser(this.currUser)
       .subscribe((data: SpecFile[]) => {
         this.listOfSpecFiles = data;
+        this.specFileViewService.setListOfSpecFiles(this.listOfSpecFiles);
       });
   }
 }

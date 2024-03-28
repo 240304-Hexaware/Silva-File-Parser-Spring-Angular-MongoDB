@@ -8,6 +8,16 @@
       (click)="onClose()"
     />
   </div>
+  <p>Pick SpecFile to Parse with</p>
+  <p-dropdown
+    [(ngModel)]="specFile"
+    (onChange)="onChooseSpecFile()"
+    [options]="listOfSpecFiles"
+    [showClear]="true"
+    optionLabel="name"
+    placeholder="Select a SpecFile"
+    appendTo="body"
+  ></p-dropdown>
   <div class="files-div">
     <div *ngFor="let parsedFile of listOfParsedFiles">
       {{ "{" }}
