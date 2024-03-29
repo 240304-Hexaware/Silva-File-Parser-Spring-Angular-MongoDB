@@ -11,6 +11,7 @@
         [(ngModel)]="specFile"
         [options]="listOfSpecFiles"
         [showClear]="true"
+        (onClick)="onDropDownClick()"
         optionLabel="name"
         placeholder="Select a SpecFile"
         appendTo="body"

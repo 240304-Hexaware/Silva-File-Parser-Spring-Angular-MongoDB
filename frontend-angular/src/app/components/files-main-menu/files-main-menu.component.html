@@ -16,5 +16,6 @@
 
 <app-add-parsed-file-popup
   [(display)]="displayAddParsedFilePopup"
+  [currUser]="currUser"
   (fileChange)="onParseFileChange($event)"
 ></app-add-parsed-file-popup>

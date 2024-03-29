@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
-import { EventFlatAndSpec, SpecFile } from '../../../types';
+import { EventFlatAndSpec, SpecFile, User } from '../../../types';
 import { FormsModule } from '@angular/forms';
 import { SpecFileViewService } from '../services/spec-file-view.service';
 import { Subscription } from 'rxjs';
@@ -21,6 +21,7 @@ export class AddParsedFilePopupComponent {
   specFile!: SpecFile;
   listOfSpecFiles: SpecFile[] = [];
 
+  @Input() currUser!: User;
   @Output() fileChange: EventEmitter<EventFlatAndSpec> =
     new EventEmitter<EventFlatAndSpec>();
 
@@ -48,8 +49,14 @@ export class AddParsedFilePopupComponent {
     }
   }
 
+  onDropDownClick(): void {
+    this.specFileViewService.fetchAllSpecFilesOfUser(this.currUser);
+    this.listOfSpecFiles = this.specFileViewService.getListOfSpecFiles();
+  }
+
   //TODO: Find a way to check using other than ngDoCheck
   ngDoCheck() {
+    // Intialize listOfSpecFiles
     this.listOfSpecFiles = this.specFileViewService.getListOfSpecFiles();
   }
 }
