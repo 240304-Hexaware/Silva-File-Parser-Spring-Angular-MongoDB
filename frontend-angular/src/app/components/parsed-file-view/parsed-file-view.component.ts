@@ -1,9 +1,15 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { ParsedFile, SpecFile, User } from '../../../types';
 import { ParsedFileViewService } from '../services/parsed-file-view.service';
 import { CommonModule } from '@angular/common';
 import { SpecFileViewService } from '../services/spec-file-view.service';
-import { DropdownModule } from 'primeng/dropdown';
+import { Dropdown, DropdownModule } from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -23,6 +29,8 @@ export class ParsedFileViewComponent {
   @Output() specFileChange: EventEmitter<SpecFile> =
     new EventEmitter<SpecFile>();
 
+  @ViewChild('specFileDropdown') specFileDropDown: Dropdown | undefined;
+
   constructor(
     private parsedFileViewService: ParsedFileViewService,
     private specFileViewService: SpecFileViewService
@@ -37,6 +45,10 @@ export class ParsedFileViewComponent {
       this.currUser,
       this.specFile
     );
+  }
+
+  onDropDownClick(): void {
+    this.specFileViewService.fetchAllSpecFilesOfUser(this.currUser);
   }
 
   // ngOnInit(): void {

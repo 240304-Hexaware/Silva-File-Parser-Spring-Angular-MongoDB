@@ -12,11 +12,13 @@
   <p-dropdown
     [(ngModel)]="specFile"
     (onChange)="onChooseSpecFile()"
+    (onClick)="onDropDownClick()"
     [options]="listOfSpecFiles"
     [showClear]="true"
     optionLabel="name"
     placeholder="Select a SpecFile"
     appendTo="body"
+    #specFileDropdown
   ></p-dropdown>
   <div class="files-div">
     <div *ngFor="let parsedFile of listOfParsedFiles">
