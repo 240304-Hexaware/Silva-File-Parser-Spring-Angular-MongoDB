@@ -55,5 +55,6 @@ export class ParsedFileViewComponent {
   // Responds after Angular checks the content projected into the directive
   ngDoCheck(): void {
     this.listOfParsedFiles = this.parsedFileViewService.getListOfParsedFiles();
+    this.listOfSpecFiles = this.specFileViewService.getListOfSpecFiles();
   }
 }

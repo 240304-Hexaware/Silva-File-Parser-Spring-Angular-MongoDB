@@ -44,7 +44,11 @@ export class ParsedFileViewService {
     formData.append('flatFileName', event.file.name);
     this.parsedFilesService
       .postParsedFile(user, event.specFile, formData)
-      .subscribe({});
+      .subscribe((data: any) => {
+        for (let ps of data) {
+          this.listOfParsedFiles.push(ps);
+        }
+      });
     //TODO: Find a way to refresh Parsed View Files after posting
   }
 }
