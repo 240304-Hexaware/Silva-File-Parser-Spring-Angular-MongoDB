@@ -3,6 +3,8 @@ import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { EventFlatAndSpec, SpecFile } from '../../../types';
 import { FormsModule } from '@angular/forms';
+import { SpecFileViewService } from '../services/spec-file-view.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-add-parsed-file-popup',
@@ -17,12 +19,12 @@ export class AddParsedFilePopupComponent {
   //TODO: Find Better solution than !
   file!: File;
   specFile!: SpecFile;
-
-  @Input() listOfSpecFiles: SpecFile[] = [];
+  listOfSpecFiles: SpecFile[] = [];
 
   @Output() fileChange: EventEmitter<EventFlatAndSpec> =
     new EventEmitter<EventFlatAndSpec>();
 
+  constructor(private specFileViewService: SpecFileViewService) {}
   onConfirm() {
     if (this.file) {
       this.fileChange.emit({ file: this.file, specFile: this.specFile });
@@ -44,5 +46,10 @@ export class AddParsedFilePopupComponent {
     if (file) {
       this.file = file;
     }
+  }
+
+  //TODO: Find a way to check using other than ngDoCheck
+  ngDoCheck() {
+    this.listOfSpecFiles = this.specFileViewService.getListOfSpecFiles();
   }
 }

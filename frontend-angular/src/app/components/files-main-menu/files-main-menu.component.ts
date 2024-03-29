@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { EventFlatAndSpec, ParsedFile, SpecFile, User } from '../../../types';
+import { EventFlatAndSpec, SpecFile, User } from '../../../types';
 import { ParsedFileViewService } from '../services/parsed-file-view.service';
 import { DialogModule } from 'primeng/dialog';
 import { AddSpecFilePopupComponent } from '../add-spec-file-popup/add-spec-file-popup.component';
@@ -19,7 +19,6 @@ import { SpecFileViewService } from '../services/spec-file-view.service';
 })
 export class FilesMainMenuComponent {
   @Input() currUser!: User;
-  listOfSpecFiles: SpecFile[] = [];
 
   //FilesMainMenu Component displays Popups (This Class)
   displayAddSpecFilePopup: boolean = false;
@@ -41,17 +40,17 @@ export class FilesMainMenuComponent {
    */
   onViewFiles(): void {
     this.parsedFileViewService.fetchAllParsedFilesOfUser(this.currUser);
+    this.specFileViewService.fetchAllSpecFilesOfUser(this.currUser);
     this.displayParsedFiles.emit(true);
   }
 
   /**
    * When Parse File Button is clicked
-   * Fetch All SpecFIles of the User, so it can be sent to AddSpecFilePopup.
+   * Fetch All SpecFiles of the User, so it can be sent to AddSpecFilePopup.
    * Also set display to true for popup
    */
   onParseFiles(): void {
     this.specFileViewService.fetchAllSpecFilesOfUser(this.currUser);
-    this.listOfSpecFiles = this.specFileViewService.getListOfSpecFiles();
     this.displayAddParsedFilePopup = true;
   }
 
@@ -61,7 +60,7 @@ export class FilesMainMenuComponent {
 
   onParseFileChange(event: EventFlatAndSpec): void {
     this.parsedFileViewService.postParsedFile(event, this.currUser);
-    //TODO: Find a way to refresh Parsed View Files after posting
+    //TODO: Find a way to refresh Parsed View Files after post
   }
 
   onSpecFileChange(event: File): void {
