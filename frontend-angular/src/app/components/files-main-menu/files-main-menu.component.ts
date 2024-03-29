@@ -33,25 +33,11 @@ export class FilesMainMenuComponent {
     private specFileViewService: SpecFileViewService
   ) {}
 
-  /**
-   * When the View Files button is clicked.
-   * Fetch all the Files.
-   * Then emit that the parsed files should be displayed
-   */
   onViewFiles(): void {
-    //Intialize The parsedFiles and SpecFiles to be shown
-    this.parsedFileViewService.fetchAllParsedFilesOfUser(this.currUser);
-    this.specFileViewService.fetchAllSpecFilesOfUser(this.currUser);
     this.displayParsedFiles.emit(true);
   }
 
-  /**
-   * When Parse File Button is clicked
-   * Fetch All SpecFiles of the User, so it can be sent to AddSpecFilePopup.
-   * Also set display to true for popup
-   */
   onParseFiles(): void {
-    this.specFileViewService.fetchAllSpecFilesOfUser(this.currUser);
     this.displayAddParsedFilePopup = true;
   }
 
@@ -61,7 +47,6 @@ export class FilesMainMenuComponent {
 
   onParseFileChange(event: EventFlatAndSpec): void {
     this.parsedFileViewService.postParsedFile(event, this.currUser);
-    //TODO: Find a way to refresh Parsed View Files after post
   }
 
   onSpecFileChange(event: File): void {
