@@ -29,8 +29,6 @@ export class ParsedFileViewComponent {
   @Output() specFileChange: EventEmitter<SpecFile> =
     new EventEmitter<SpecFile>();
 
-  @ViewChild('specFileDropdown') specFileDropDown: Dropdown | undefined;
-
   constructor(
     private parsedFileViewService: ParsedFileViewService,
     private specFileViewService: SpecFileViewService
