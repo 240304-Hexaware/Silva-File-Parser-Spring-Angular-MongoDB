@@ -26,8 +26,6 @@ export class ParsedFileViewComponent {
   @Input() currUser!: User;
   @Output() displayParsedFiles: EventEmitter<boolean> =
     new EventEmitter<boolean>();
-  @Output() specFileChange: EventEmitter<SpecFile> =
-    new EventEmitter<SpecFile>();
 
   constructor(
     private parsedFileViewService: ParsedFileViewService,
