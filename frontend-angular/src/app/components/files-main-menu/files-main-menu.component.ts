@@ -39,6 +39,7 @@ export class FilesMainMenuComponent {
    * Then emit that the parsed files should be displayed
    */
   onViewFiles(): void {
+    //Intialize The parsedFiles and SpecFiles to be shown
     this.parsedFileViewService.fetchAllParsedFilesOfUser(this.currUser);
     this.specFileViewService.fetchAllSpecFilesOfUser(this.currUser);
     this.displayParsedFiles.emit(true);
