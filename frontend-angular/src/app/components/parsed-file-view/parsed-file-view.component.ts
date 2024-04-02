@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 import { SpecFileViewService } from '../services/spec-file-view.service';
 import { Dropdown, DropdownModule } from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-parsed-file-view',
@@ -44,20 +45,31 @@ export class ParsedFileViewComponent {
   }
 
   onDropDownClick(): void {
-    this.specFileViewService.fetchAllSpecFilesOfUser(this.currUser);
+    this.specFileViewService
+      .fetchAllSpecFilesOfUser(this.currUser)
+      .subscribe((data: SpecFile[]) => {
+        this.listOfSpecFiles = data;
+      });
     this.listOfSpecFiles = this.specFileViewService.getListOfSpecFiles();
   }
 
-  // ngOnInit(): void {
-  //   this.listOfSpecFiles = this.specFileViewService.getListOfSpecFiles();
-  // }
-  // TODO: Understand why ngOnInit does not work here
-  // Responds after Angular checks the content projected into the directive
-  ngDoCheck(): void {
-    // Needed for intialize on popup and dynamic view adding
-    this.listOfParsedFiles = this.parsedFileViewService.getListOfParsedFiles();
+  ngOnInit(): void {
+    this.parsedFileViewService
+      .fetchAllParsedFilesOfUser(this.currUser)
+      .subscribe((data: ParsedFile[]) => {
+        this.listOfParsedFiles = data;
+      });
+    console.log('NGINIT');
+  }
 
-    // Needed to intialize On popup
-    this.listOfSpecFiles = this.specFileViewService.getListOfSpecFiles();
+  ngDoCheck(): void {
+    console.log('Add');
   }
 }
+
+// TODO: Understand why ngOnInit does not work here
+// Responds after Angular checks the content projected into the directive
+// ngDoCheck(): void {
+//   // Needed for intialize on popup and dynamic view adding
+//   this.listOfParsedFiles = this.parsedFileViewService.getListOfParsedFiles();
+// }

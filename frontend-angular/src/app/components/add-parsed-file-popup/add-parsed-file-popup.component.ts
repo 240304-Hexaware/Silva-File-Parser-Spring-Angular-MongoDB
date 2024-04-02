@@ -50,13 +50,10 @@ export class AddParsedFilePopupComponent {
   }
 
   onDropDownClick(): void {
-    this.specFileViewService.fetchAllSpecFilesOfUser(this.currUser);
-    this.listOfSpecFiles = this.specFileViewService.getListOfSpecFiles();
-  }
-
-  //TODO: Find a way to check using other than ngDoCheck
-  ngDoCheck() {
-    // Intialize listOfSpecFiles
-    this.listOfSpecFiles = this.specFileViewService.getListOfSpecFiles();
+    this.specFileViewService
+      .fetchAllSpecFilesOfUser(this.currUser)
+      .subscribe((data: SpecFile[]) => {
+        this.listOfSpecFiles = data;
+      });
   }
 }

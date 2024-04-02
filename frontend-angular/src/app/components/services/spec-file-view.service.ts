@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SpecFile, User } from '../../../types';
 import { SpecFileApiService } from '../../services/spec-file-api.service';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -18,23 +18,22 @@ export class SpecFileViewService {
     this.listOfSpecFiles = newList;
   }
 
-  fetchAllSpecFilesOfUser(user: User): void {
-    this.specFileApiService
-      .getAllFilesByUser(user)
-      .subscribe((data: SpecFile[]) => {
-        this.setListOfSpecFiles(data);
-      });
+  fetchAllSpecFilesOfUser(user: User): Observable<SpecFile[]> {
+    return this.specFileApiService.getAllFilesByUser(user);
+    // .subscribe((data: SpecFile[]) => {
+    //   this.setListOfSpecFiles(data);
+    // });
   }
 
-  postSpecFile(event: File, user: User) {
+  // TODO: Replace any
+  postSpecFile(event: File, user: User): any {
     const formData = new FormData();
     formData.append('specFileAsJson', event, event.name);
     this.specFileApiService.postSpecFile(user, formData).subscribe({});
-    this.specFileApiService
-      .getAllFilesByUser(user)
-      .subscribe((data: SpecFile[]) => {
-        this.listOfSpecFiles = data;
-      });
-    console.log(this.listOfSpecFiles);
+    // this.specFileApiService
+    //   .getAllFilesByUser(user)
+    //   .subscribe((data: SpecFile[]) => {
+    //     this.listOfSpecFiles = data;
+    //   });
   }
 }
