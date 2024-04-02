@@ -54,10 +54,3 @@ export class ParsedFileViewComponent {
     this.listOfSpecFiles = this.specFileViewService.getListOfSpecFiles();
   }
 }
-
-// TODO: Understand why ngOnInit does not work here
-// Responds after Angular checks the content projected into the directive
-// ngDoCheck(): void {
-//   // Needed for intialize on popup and dynamic view adding
-//   this.listOfParsedFiles = this.parsedFileViewService.getListOfParsedFiles();
-// }

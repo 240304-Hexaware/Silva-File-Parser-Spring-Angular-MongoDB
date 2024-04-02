@@ -20,20 +20,12 @@ export class SpecFileViewService {
 
   fetchAllSpecFilesOfUser(user: User): Observable<SpecFile[]> {
     return this.specFileApiService.getAllFilesByUser(user);
-    // .subscribe((data: SpecFile[]) => {
-    //   this.setListOfSpecFiles(data);
-    // });
   }
 
   // TODO: Replace any
-  postSpecFile(event: File, user: User): any {
+  postSpecFile(event: File, user: User): Observable<SpecFile[]> {
     const formData = new FormData();
     formData.append('specFileAsJson', event, event.name);
-    this.specFileApiService.postSpecFile(user, formData).subscribe({});
-    // this.specFileApiService
-    //   .getAllFilesByUser(user)
-    //   .subscribe((data: SpecFile[]) => {
-    //     this.listOfSpecFiles = data;
-    //   });
+    return this.specFileApiService.postSpecFile(user, formData);
   }
 }
