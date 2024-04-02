@@ -38,11 +38,20 @@ export class ParsedFileViewComponent {
     this.displayParsedFiles.emit(false);
   }
 
+  onClear(): void {
+    this.parsedFileViewService
+      .fetchAllParsedFilesOfUser(this.currUser)
+      .subscribe((data: ParsedFile[]) => {
+        this.listOfParsedFiles = data;
+      });
+  }
+
   onChooseSpecFile(): void {
-    this.parsedFileViewService.fetchAllParseFilesOfUserBySpecId(
-      this.currUser,
-      this.specFile
-    );
+    this.parsedFileViewService
+      .fetchAllParseFilesOfUserBySpecId(this.currUser, this.specFile)
+      .subscribe((data: ParsedFile[]) => {
+        this.listOfParsedFiles = data;
+      });
   }
 
   onDropDownClick(): void {

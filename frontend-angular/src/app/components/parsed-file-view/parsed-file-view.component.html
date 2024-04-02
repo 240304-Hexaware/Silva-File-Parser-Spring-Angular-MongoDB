@@ -13,6 +13,7 @@
     [(ngModel)]="specFile"
     (onChange)="onChooseSpecFile()"
     (onClick)="onDropDownClick()"
+    (onClear)="onClear()"
     [options]="listOfSpecFiles"
     [showClear]="true"
     optionLabel="name"
