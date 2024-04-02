@@ -9,7 +9,7 @@ import { ParsedFile, SpecFile, User } from '../../../types';
 import { ParsedFileViewService } from '../services/parsed-file-view.service';
 import { CommonModule } from '@angular/common';
 import { SpecFileViewService } from '../services/spec-file-view.service';
-import { Dropdown, DropdownModule } from 'primeng/dropdown';
+import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
 
@@ -21,9 +21,10 @@ import { Observable } from 'rxjs';
   styleUrl: './parsed-file-view.component.scss',
 })
 export class ParsedFileViewComponent {
-  listOfParsedFiles: ParsedFile[] = [];
+  @Input() listOfParsedFiles!: ParsedFile[];
   listOfSpecFiles: SpecFile[] = [];
   specFile!: SpecFile;
+
   @Input() currUser!: User;
   @Output() displayParsedFiles: EventEmitter<boolean> =
     new EventEmitter<boolean>();
@@ -51,19 +52,6 @@ export class ParsedFileViewComponent {
         this.listOfSpecFiles = data;
       });
     this.listOfSpecFiles = this.specFileViewService.getListOfSpecFiles();
-  }
-
-  ngOnInit(): void {
-    this.parsedFileViewService
-      .fetchAllParsedFilesOfUser(this.currUser)
-      .subscribe((data: ParsedFile[]) => {
-        this.listOfParsedFiles = data;
-      });
-    console.log('NGINIT');
-  }
-
-  ngDoCheck(): void {
-    console.log('Add');
   }
 }
 

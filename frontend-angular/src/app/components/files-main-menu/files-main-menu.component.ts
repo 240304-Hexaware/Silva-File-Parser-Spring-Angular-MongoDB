@@ -27,6 +27,8 @@ export class FilesMainMenuComponent {
   //Home Component Displays Parsed Files
   @Output() displayParsedFiles: EventEmitter<boolean> =
     new EventEmitter<boolean>();
+  @Output() parsedFileChange: EventEmitter<EventFlatAndSpec> =
+    new EventEmitter<EventFlatAndSpec>();
 
   constructor(
     private parsedFileViewService: ParsedFileViewService,
@@ -46,7 +48,8 @@ export class FilesMainMenuComponent {
   }
 
   onParseFileChange(event: EventFlatAndSpec): void {
-    this.parsedFileViewService.postParsedFile(event, this.currUser);
+    this.parsedFileChange.emit(event);
+    // this.parsedFileViewService.postParsedFile(event, this.currUser);
   }
 
   onSpecFileChange(event: File): void {

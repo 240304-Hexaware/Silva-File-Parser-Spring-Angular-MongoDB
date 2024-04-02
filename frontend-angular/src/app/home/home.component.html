@@ -4,12 +4,14 @@
   <app-files-main-menu
     [currUser]="hardcodedUser"
     (displayParsedFiles)="setIsParsedFileVisible($event)"
+    (parsedFileChange)="onParseFileChange($event)"
   ></app-files-main-menu>
 
   <!-- Dynamic Components -->
   <app-parsed-file-view
     *ngIf="isParsedFileVisible"
     [currUser]="currUser"
+    [listOfParsedFiles]="listOfParsedFiles"
     (displayParsedFiles)="setIsParsedFileVisible($event)"
   ></app-parsed-file-view>
 </div>

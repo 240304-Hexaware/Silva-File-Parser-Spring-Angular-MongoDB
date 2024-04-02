@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Input } from '@angular/core';
 import { EventFlatAndSpec, ParsedFile, SpecFile, User } from '../../../types';
 import { ParsedFilesService } from '../../services/parsed-files.service';
 import { Observable } from 'rxjs';
@@ -25,9 +25,6 @@ export class ParsedFileViewService {
    */
   fetchAllParsedFilesOfUser(user: User): Observable<ParsedFile[]> {
     return this.parsedFilesService.getAllFilesByUser(user);
-    // .subscribe((data: ParsedFile[]) => {
-    //   this.setListOfParsedFiles(data);
-    // });
   }
 
   fetchAllParseFilesOfUserBySpecId(
@@ -35,22 +32,16 @@ export class ParsedFileViewService {
     specFile: SpecFile
   ): Observable<ParsedFile[]> {
     return this.parsedFilesService.getAllFilesOfUserBySpecId(user, specFile);
-    // .subscribe((data: ParsedFile[]) => {
-    //   this.setListOfParsedFiles(data);
-    // });
   }
 
-  postParsedFile(event: EventFlatAndSpec, user: User): void {
+  postParsedFile(event: EventFlatAndSpec, user: User): Observable<ParsedFile> {
     const formData = new FormData();
     formData.append('flatFile', event.file, event.file.name);
     formData.append('flatFileName', event.file.name);
-    this.parsedFilesService
-      .postParsedFile(user, event.specFile, formData)
-      .subscribe((data: any) => {
-        for (let ps of data) {
-          this.listOfParsedFiles.push(ps);
-        }
-      });
-    //TODO: Find a way to refresh Parsed View Files after posting
+    return this.parsedFilesService.postParsedFile(
+      user,
+      event.specFile,
+      formData
+    );
   }
 }
