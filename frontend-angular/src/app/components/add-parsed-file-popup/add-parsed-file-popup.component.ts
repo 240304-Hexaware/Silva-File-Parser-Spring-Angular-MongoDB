@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { EventFlatAndSpec, SpecFile, User } from '../../../types';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgModel } from '@angular/forms';
 import { SpecFileViewService } from '../services/spec-file-view.service';
 import { Subscription } from 'rxjs';
 
@@ -20,6 +20,8 @@ export class AddParsedFilePopupComponent {
   file!: File;
   specFile!: SpecFile;
   listOfSpecFiles: SpecFile[] = [];
+  hasParsedFileSelected: boolean = false;
+  hasSpecFileSelected: boolean = false;
 
   @Input() currUser!: User;
   @Output() fileChange: EventEmitter<EventFlatAndSpec> =
@@ -44,8 +46,11 @@ export class AddParsedFilePopupComponent {
   //TODO: Find better type for event
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
-    if (file) {
+    if (file.type == 'text/plain') {
+      this.hasParsedFileSelected = true;
       this.file = file;
+    } else {
+      this.hasParsedFileSelected = false;
     }
   }
 
@@ -55,5 +60,13 @@ export class AddParsedFilePopupComponent {
       .subscribe((data: SpecFile[]) => {
         this.listOfSpecFiles = data;
       });
+  }
+
+  onDropDownChange(): void {
+    this.hasSpecFileSelected = true;
+  }
+
+  onDropDownClear(): void {
+    this.hasSpecFileSelected = false;
   }
 }

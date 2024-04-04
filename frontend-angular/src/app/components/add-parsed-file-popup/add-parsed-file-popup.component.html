@@ -12,6 +12,8 @@
         [options]="listOfSpecFiles"
         [showClear]="true"
         (onClick)="onDropDownClick()"
+        (onChange)="onDropDownChange()"
+        (onClear)="onDropDownClear()"
         optionLabel="name"
         placeholder="Select a SpecFile"
         appendTo="body"
@@ -24,7 +26,14 @@
   </div>
 
   <p-footer>
-    <button type="button" (click)="onConfirm()" label="Confirm">Confirm</button>
+    <button
+      type="button"
+      (click)="onConfirm()"
+      [disabled]="!hasParsedFileSelected || !hasSpecFileSelected"
+      label="Confirm"
+    >
+      Confirm
+    </button>
     <button type="button" (click)="onCancel()" label="Cancel">Cancel</button>
   </p-footer>
 </p-dialog>

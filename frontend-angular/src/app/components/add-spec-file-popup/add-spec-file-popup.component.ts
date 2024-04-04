@@ -60,7 +60,6 @@ export class AddSpecFilePopupComponent {
   // Bind Uploaded file to private file
   //TODO: Find better type for event
   onFileSelected(event: any) {
-    console.log(event);
     const file: File = event.target.files[0];
     if (file.type == 'application/json') {
       this.isInvalidFileType = false;
