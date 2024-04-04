@@ -48,7 +48,6 @@ public class SpecFileService {
      * @throws IOException
      */
     public SpecFile insertNewSpecFile(MultipartFile specFileAsJson, ObjectId userID) throws InvalidSpecFileException, IOException {
-        //TODO: Implement MultiLine parsing
         ObjectMapper objectMapper = new ObjectMapper();
         String specFileContent = HelperForService.parseFileToString(specFileAsJson);
 
