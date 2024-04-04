@@ -6,6 +6,9 @@ import { FilesMainMenuComponent } from '../components/files-main-menu/files-main
 import { ParsedFileViewComponent } from '../components/parsed-file-view/parsed-file-view.component';
 import { CommonModule } from '@angular/common';
 import { ParsedFileViewService } from '../components/services/parsed-file-view.service';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+import { error } from 'console';
 
 @Component({
   selector: 'app-home',
@@ -15,9 +18,11 @@ import { ParsedFileViewService } from '../components/services/parsed-file-view.s
     FilesMainMenuComponent,
     ParsedFileViewComponent,
     CommonModule,
+    ToastModule,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
+  providers: [MessageService],
 })
 export class HomeComponent {
   isParsedFileVisible: boolean = false;
@@ -25,7 +30,8 @@ export class HomeComponent {
 
   constructor(
     private userService: UserService,
-    private parsedFileViewService: ParsedFileViewService
+    private parsedFileViewService: ParsedFileViewService,
+    private messageService: MessageService
   ) {}
 
   //TODO: Delete when hardcoded user not needed
@@ -46,13 +52,25 @@ export class HomeComponent {
   };
 
   onParseFileChange(event: EventFlatAndSpec): void {
-    this.parsedFileViewService
-      .postParsedFile(event, this.currUser)
-      .subscribe((data: any) => {
+    this.parsedFileViewService.postParsedFile(event, this.currUser).subscribe({
+      next: (data: ParsedFile[]) => {
         for (let ps of data) {
           this.listOfParsedFiles.push(ps);
         }
-      });
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Added ParsedFile',
+          detail: `${event.file.name}`,
+        });
+      },
+      error: (error) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Could not Add ParsedFile',
+          detail: error.error,
+        });
+      },
+    });
   }
 
   fetchUserByUsername(userName: string) {

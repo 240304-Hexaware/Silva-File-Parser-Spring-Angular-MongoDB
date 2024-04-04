@@ -34,7 +34,10 @@ export class ParsedFileViewService {
     return this.parsedFilesService.getAllFilesOfUserBySpecId(user, specFile);
   }
 
-  postParsedFile(event: EventFlatAndSpec, user: User): Observable<ParsedFile> {
+  postParsedFile(
+    event: EventFlatAndSpec,
+    user: User
+  ): Observable<ParsedFile[]> {
     const formData = new FormData();
     formData.append('flatFile', event.file, event.file.name);
     formData.append('flatFileName', event.file.name);

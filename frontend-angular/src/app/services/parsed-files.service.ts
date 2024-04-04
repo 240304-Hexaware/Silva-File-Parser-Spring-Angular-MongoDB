@@ -32,7 +32,7 @@ export class ParsedFilesService {
     user: User,
     specFile: SpecFile,
     formData: FormData
-  ): Observable<ParsedFile> => {
+  ): Observable<ParsedFile[]> => {
     this.username = user.username;
     return this.apiService.post(
       `${this.baseURL()}/specFile/${specFile.name}`,
