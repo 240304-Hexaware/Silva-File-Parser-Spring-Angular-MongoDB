@@ -47,11 +47,13 @@ export class ParsedFileViewComponent {
   }
 
   onChooseSpecFile(): void {
-    this.parsedFileViewService
-      .fetchAllParseFilesOfUserBySpecId(this.currUser, this.specFile)
-      .subscribe((data: ParsedFile[]) => {
-        this.listOfParsedFiles = data;
-      });
+    if (this.specFile) {
+      this.parsedFileViewService
+        .fetchAllParseFilesOfUserBySpecId(this.currUser, this.specFile)
+        .subscribe((data: ParsedFile[]) => {
+          this.listOfParsedFiles = data;
+        });
+    }
   }
 
   onDropDownClick(): void {
