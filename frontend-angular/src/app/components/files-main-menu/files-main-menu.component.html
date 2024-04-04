@@ -10,8 +10,8 @@
 
 <!-- Popups -->
 <app-add-spec-file-popup
+  [currUser]="currUser"
   [(display)]="displayAddSpecFilePopup"
-  (fileChange)="onSpecFileChange($event)"
 ></app-add-spec-file-popup>
 
 <app-add-parsed-file-popup

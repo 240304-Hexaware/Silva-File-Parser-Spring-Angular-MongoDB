@@ -4,6 +4,7 @@ import { DialogModule } from 'primeng/dialog';
 import { AddSpecFilePopupComponent } from '../add-spec-file-popup/add-spec-file-popup.component';
 import { AddParsedFilePopupComponent } from '../add-parsed-file-popup/add-parsed-file-popup.component';
 import { SpecFileViewService } from '../services/spec-file-view.service';
+import { error } from 'console';
 
 @Component({
   selector: 'app-files-main-menu',
@@ -29,8 +30,6 @@ export class FilesMainMenuComponent {
   @Output() parsedFileChange: EventEmitter<EventFlatAndSpec> =
     new EventEmitter<EventFlatAndSpec>();
 
-  constructor(private specFileViewService: SpecFileViewService) {}
-
   onViewFiles(): void {
     this.displayParsedFiles.emit(true);
   }
@@ -46,9 +45,5 @@ export class FilesMainMenuComponent {
   onParseFileChange(event: EventFlatAndSpec): void {
     // Emit Event containing Flat File and SpecFile up to Home Component
     this.parsedFileChange.emit(event);
-  }
-
-  onSpecFileChange(event: File): void {
-    this.specFileViewService.postSpecFile(event, this.currUser).subscribe({});
   }
 }

@@ -12,10 +12,13 @@
       type="button"
       (click)="onConfirm()"
       label="Confirm"
-      [disabled]="!file"
+      [disabled]="isConfirmDisabled"
     >
       Confirm
     </button>
     <button type="button" (click)="onCancel()" label="Cancel">Cancel</button>
   </p-footer>
 </p-dialog>
+
+<!-- Toast -->
+<p-toast position="bottom-right"></p-toast>
