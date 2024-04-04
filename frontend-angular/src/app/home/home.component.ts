@@ -59,14 +59,14 @@ export class HomeComponent {
         }
         this.messageService.add({
           severity: 'success',
-          summary: 'Added ParsedFile',
+          summary: 'Parsed FlatFile',
           detail: `${event.file.name}`,
         });
       },
       error: (error) => {
         this.messageService.add({
           severity: 'error',
-          summary: 'Could not Add ParsedFile',
+          summary: 'Could not parse Flat File',
           detail: error.error,
         });
       },
