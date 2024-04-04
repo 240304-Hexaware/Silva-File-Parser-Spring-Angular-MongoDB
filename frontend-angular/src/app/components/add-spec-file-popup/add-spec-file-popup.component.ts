@@ -1,14 +1,16 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-add-spec-file-popup',
   standalone: true,
-  imports: [DialogModule],
+  imports: [DialogModule, CommonModule],
   templateUrl: './add-spec-file-popup.component.html',
   styleUrl: './add-spec-file-popup.component.scss',
 })
 export class AddSpecFilePopupComponent {
+  isInvalidFileType: boolean = false;
   @Input() display: boolean = false;
   @Output() displayChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -34,8 +36,12 @@ export class AddSpecFilePopupComponent {
   //TODO: Find better type for event
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
-    if (file) {
+    if (file.type == 'application/json') {
+      this.isInvalidFileType = false;
       this.file = file;
+    } else {
+      this.isInvalidFileType = true;
+      this.file = null;
     }
   }
 }

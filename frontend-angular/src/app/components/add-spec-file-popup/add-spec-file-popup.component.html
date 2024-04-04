@@ -6,8 +6,16 @@
 >
   <p>Upload Spec File</p>
   <input type="file" (change)="onFileSelected($event)" />
+  <p *ngIf="isInvalidFileType" class="error">The file type must be .json</p>
   <p-footer>
-    <button type="button" (click)="onConfirm()" label="Confirm">Confirm</button>
+    <button
+      type="button"
+      (click)="onConfirm()"
+      label="Confirm"
+      [disabled]="!file"
+    >
+      Confirm
+    </button>
     <button type="button" (click)="onCancel()" label="Cancel">Cancel</button>
   </p-footer>
 </p-dialog>
