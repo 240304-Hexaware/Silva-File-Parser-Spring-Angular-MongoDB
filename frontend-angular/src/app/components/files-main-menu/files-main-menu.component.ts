@@ -3,8 +3,6 @@ import { EventFlatAndSpec, SpecFile, User } from '../../../types';
 import { DialogModule } from 'primeng/dialog';
 import { AddSpecFilePopupComponent } from '../add-spec-file-popup/add-spec-file-popup.component';
 import { AddParsedFilePopupComponent } from '../add-parsed-file-popup/add-parsed-file-popup.component';
-import { SpecFileViewService } from '../services/spec-file-view.service';
-import { error } from 'console';
 
 @Component({
   selector: 'app-files-main-menu',
