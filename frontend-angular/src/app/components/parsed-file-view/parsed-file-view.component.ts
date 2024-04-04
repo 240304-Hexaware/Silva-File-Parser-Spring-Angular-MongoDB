@@ -1,17 +1,10 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ParsedFile, SpecFile, User } from '../../../types';
 import { ParsedFileViewService } from '../services/parsed-file-view.service';
 import { CommonModule } from '@angular/common';
 import { SpecFileViewService } from '../services/spec-file-view.service';
 import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-parsed-file-view',

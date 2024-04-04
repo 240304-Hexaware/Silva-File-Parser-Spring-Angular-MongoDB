@@ -8,12 +8,21 @@
   ></app-files-main-menu>
 
   <!-- Dynamic Components -->
-  <app-parsed-file-view
-    *ngIf="isParsedFileVisible"
-    [currUser]="currUser"
-    [listOfParsedFiles]="listOfParsedFiles"
-    (displayParsedFiles)="setIsParsedFileVisible($event)"
-  ></app-parsed-file-view>
+  <div class="row gap-2">
+    <app-parsed-file-view
+      *ngIf="isParsedFileVisible"
+      [currUser]="currUser"
+      [listOfParsedFiles]="listOfParsedFiles"
+      (displayParsedFiles)="setIsParsedFileVisible($event)"
+    ></app-parsed-file-view>
+    <app-new-parsed-file-view
+      *ngIf="isNewParsedFileVisible"
+      [currUser]="currUser"
+      [listOfParsedFiles]="listOfNewParsedFiles"
+      [specFile]="specFileUsed"
+      (displayChange)="setIsNewParsedFileVisible($event)"
+    ></app-new-parsed-file-view>
+  </div>
 </div>
 
 <!-- Toast -->

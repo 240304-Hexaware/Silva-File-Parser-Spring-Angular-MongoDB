@@ -1,6 +1,6 @@
 <div class="wrapper column full-center mt-25">
   <div class="row">
-    <h2 class="mb-15">{{ currUser.username }}'s Parsed Files</h2>
+    <h2>Newly Added Parsed Files</h2>
     <img
       src="../../../assets/image/close-button-png-30221.png"
       alt="Close Parsed Files"
@@ -8,21 +8,11 @@
       (click)="onClose()"
     />
   </div>
-  <p>Pick SpecFile to Parse with</p>
-  <p-dropdown
-    [(ngModel)]="specFile"
-    (onChange)="onChooseSpecFile()"
-    (onClick)="onDropDownClick()"
-    (onClear)="onClear()"
-    [options]="listOfSpecFiles"
-    [showClear]="true"
-    optionLabel="name"
-    placeholder="Select a SpecFile"
-    appendTo="body"
-    #specFileDropdown
-  ></p-dropdown>
   <div class="files-div mt-15">
-    <h3>Number of Files found: {{ listOfParsedFiles.length }}</h3>
+    <h3>
+      Number of Files Parsed from {{ specFile?.name }}:
+      {{ listOfParsedFiles.length }}
+    </h3>
     <div *ngFor="let parsedFile of listOfParsedFiles">
       {{ "{" }}
       <div *ngFor="let fileInfo of parsedFile.fileInfo | keyvalue">

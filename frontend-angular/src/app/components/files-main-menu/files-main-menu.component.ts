@@ -25,7 +25,8 @@ export class FilesMainMenuComponent {
   //Home Component Displays Parsed Files
   @Output() displayParsedFiles: EventEmitter<boolean> =
     new EventEmitter<boolean>();
-  @Output() parsedFileChange: EventEmitter<EventFlatAndSpec> =
+  @Output()
+  parsedFileChange: EventEmitter<EventFlatAndSpec> =
     new EventEmitter<EventFlatAndSpec>();
 
   onViewFiles(): void {
