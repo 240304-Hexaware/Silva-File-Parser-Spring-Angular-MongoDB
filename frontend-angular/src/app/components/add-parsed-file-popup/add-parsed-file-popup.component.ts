@@ -5,11 +5,12 @@ import { EventFlatAndSpec, SpecFile, User } from '../../../types';
 import { FormsModule, NgModel } from '@angular/forms';
 import { SpecFileViewService } from '../services/spec-file-view.service';
 import { Subscription } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-add-parsed-file-popup',
   standalone: true,
-  imports: [DialogModule, DropdownModule, FormsModule],
+  imports: [DialogModule, DropdownModule, FormsModule, CommonModule],
   templateUrl: './add-parsed-file-popup.component.html',
   styleUrl: './add-parsed-file-popup.component.scss',
 })
@@ -22,6 +23,7 @@ export class AddParsedFilePopupComponent {
   listOfSpecFiles: SpecFile[] = [];
   hasParsedFileSelected: boolean = false;
   hasSpecFileSelected: boolean = false;
+  isInvalidFileType: boolean = false;
 
   @Input() currUser!: User;
   @Output() fileChange: EventEmitter<EventFlatAndSpec> =
@@ -48,9 +50,12 @@ export class AddParsedFilePopupComponent {
     const file: File = event.target.files[0];
     if (file.type == 'text/plain') {
       this.hasParsedFileSelected = true;
+      this.isInvalidFileType = false;
       this.file = file;
+      console.log(this.hasParsedFileSelected);
     } else {
       this.hasParsedFileSelected = false;
+      this.isInvalidFileType = true;
     }
   }
 

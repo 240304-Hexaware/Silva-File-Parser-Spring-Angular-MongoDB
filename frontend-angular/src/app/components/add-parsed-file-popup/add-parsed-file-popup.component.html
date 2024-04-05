@@ -22,6 +22,7 @@
     <div>
       <p>Upload FlatFile to be Parsed</p>
       <input type="file" (change)="onFileSelected($event)" />
+      <p *ngIf="isInvalidFileType" class="error">Parsed File must be .txt</p>
     </div>
   </div>
 
