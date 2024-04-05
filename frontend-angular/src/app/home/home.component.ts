@@ -70,6 +70,7 @@ export class HomeComponent {
           summary: 'Parsed FlatFile',
           detail: `${event.file.name}`,
         });
+        this.isNewParsedFileVisible = true;
       },
       error: (error) => {
         this.messageService.add({
@@ -79,7 +80,6 @@ export class HomeComponent {
         });
       },
     });
-    this.isNewParsedFileVisible = true;
   }
 
   fetchUserByUsername(userName: string) {
